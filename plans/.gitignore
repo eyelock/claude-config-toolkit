@@ -1,0 +1,5 @@
+# Track structure, ignore content
+*
+!.gitignore
+!README.md
+!TEMPLATE.md

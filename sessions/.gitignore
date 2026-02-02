@@ -1,0 +1,21 @@
+# Session Handover Documents
+#
+# Purpose: Bridge the gap between AI conversation sessions
+# Pattern: YYYY-MM-DD-description.md
+#
+# These files are git-ignored because they're your personal session state.
+# Think of them as "save points" in your collaboration with Claude.
+#
+# When to create:
+# - Pausing work mid-stream
+# - Switching contexts
+# - Need to resume later (possibly different Claude instance)
+# - Complex multi-session work
+#
+# Structure all files by default
+*
+
+# But track structure documentation
+!.gitignore
+!README.md
+!TEMPLATE.md

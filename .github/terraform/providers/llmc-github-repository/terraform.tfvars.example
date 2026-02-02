@@ -1,0 +1,28 @@
+# Example Terraform variables
+# Copy this file to terraform.tfvars and customize for your team
+
+# GitHub Configuration
+github_organization = "your-org-name"  # or your GitHub username for personal repos
+
+# Repository Settings
+repository_name        = "llm-config"
+repository_description = "MyTeam's LLM configurations for Claude Code"
+repository_visibility  = "private"  # or "public" for open source
+is_template_repository = false      # set true to allow other teams to fork
+
+# Team Information
+team_name = "MyTeam"
+
+# Branch Protection
+enable_branch_protection      = true
+enable_required_reviews       = true
+required_approving_review_count = 1  # 0 to disable review requirements
+
+# Repository Topics (for discoverability)
+repository_topics = [
+  "llm",
+  "claude-code",
+  "ai-configuration",
+  "developer-tools",
+  "myteam"  # Add your team/org specific topics
+]

@@ -1,0 +1,18 @@
+# Local experiments (git-ignored by design)
+*.local.*
+*.local/
+
+# Planning documents (track structure, ignore content)
+plans/*
+!plans/.gitignore
+!plans/README.md
+!plans/TEMPLATE.md
+
+# Session files (track structure, ignore content)
+# Can contain markdown, scripts, anything session-related
+sessions/*
+!sessions/.gitignore
+!sessions/README.md
+!sessions/TEMPLATE.md
+
+.claude/settings.local.json

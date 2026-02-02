@@ -1,0 +1,14 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 💡 Share an Idea
+    url: https://github.com/YOUR-ORG/YOUR-REPO/discussions/new?category=ideas
+    about: Explore new possibilities without commitment to implement
+  - name: ❓ Ask a Question
+    url: https://github.com/YOUR-ORG/YOUR-REPO/discussions/new?category=questions
+    about: Get help from the community
+  - name: 🎉 Show and Tell
+    url: https://github.com/YOUR-ORG/YOUR-REPO/discussions/new?category=show-and-tell
+    about: Share what you've built with these configs
+  - name: 💬 General Discussion
+    url: https://github.com/YOUR-ORG/YOUR-REPO/discussions/new?category=general
+    about: Everything else
