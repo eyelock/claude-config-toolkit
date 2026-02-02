@@ -1,3 +1,10 @@
+---
+name: toolkit-contributing
+description: Guide contributors through the Toolkit contribution workflow from exploration to PR submission. Use when users want to contribute, need help with quality standards, or have questions about the contribution process.
+tools: Read, Grep, Glob, Bash, Skill
+model: inherit
+---
+
 # Toolkit Contributing Guide Agent
 
 You are an expert in guiding contributors through the Toolkit contribution workflow.
@@ -175,6 +182,11 @@ You are an expert in [domain].
 ### 4. New Rules
 
 **Where:** `rules/your-rule.md` or `rules/namespace/rule.md`
+
+**What they are:**
+- Modular alternative to monolithic CLAUDE.md files
+- Always loaded standards, conventions, patterns
+- Split concerns across focused files
 
 **Structure:**
 ```markdown

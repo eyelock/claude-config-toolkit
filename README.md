@@ -10,6 +10,9 @@ A proven approach to writing, sharing, and measuring the impact of AI developmen
 
 **One command:** `/toolkit-setup` - It detects your context and does the right thing.
 
+<details>
+<summary>Scenario 1: Team Member (Project with the Toolkit)</summary>
+
 ### Scenario 1: Team Member (Project with the Toolkit)
 
 **Your project already has `.claude/` folder:**
@@ -29,6 +32,11 @@ A proven approach to writing, sharing, and measuring the impact of AI developmen
    ```
 
 **No `.claude/` folder yet?** Run `/toolkit-setup` - it will offer to add the Toolkit as submodule.
+
+</details>
+
+<details>
+<summary>Scenario 2: Claude Config Maintainer (Developing Configs)</summary>
 
 ### Scenario 2: Claude Config Maintainer (Developing Configs)
 
@@ -62,7 +70,13 @@ A proven approach to writing, sharing, and measuring the impact of AI developmen
 
 **That's the whole flow!** The system guides you from there.
 
-### The *.local.* Pattern
+</details>
+
+
+<details>
+<summary>Or if you just want to explore locally ...</summary>
+
+### Alt. Scenario: The *.local.* Pattern
 
 **Experiment safely:**
 - Create: `my-command.local.md` (git-ignored)
@@ -72,9 +86,10 @@ A proven approach to writing, sharing, and measuring the impact of AI developmen
 
 **Path: Experiment → Test → Promote → Team**
 
-## What This System Provides
+</details>
 
-### 🧩 Artifact Types at a Glance
+
+## 🧩 Artifact Types at a Glance
 
 Claude Code supports five artifact types. Each has different characteristics for context, interaction, and execution:
 
@@ -83,7 +98,7 @@ Claude Code supports five artifact types. Each has different characteristics for
 | **Command** | Execute bash operations | User invokes → Sees output | Fresh each time, no dilution | Automation, file ops, git tasks |
 | **Skill** | Guide interactive workflows | User invokes → Interactive Q&A | Progressive disclosure, fresh on invoke | Setup wizards, decision helpers, multi-step processes |
 | **Agent** | Provide expert coaching | LLM-direct (background) | Loaded at start, ⚠️ dilutes over hours | Domain expertise, best practices, architecture guidance |
-| **Rule** | Define standards/conventions | Always loaded (passive) | Loaded at start, ⚠️ dilutes over time | Naming conventions, quick reference, style guides |
+| **Rule** | Define standards/conventions (modular alternative to CLAUDE.md) | Always loaded (passive) | Loaded at start, ⚠️ dilutes over time | Naming conventions, quick reference, style guides |
 | **Plan** | Document implementation | Reference material | Read when needed | Architecture decisions, feature designs, approach docs |
 
 **Key Insights:**
@@ -91,10 +106,12 @@ Claude Code supports five artifact types. Each has different characteristics for
 - ⚡ **Progressive disclosure**: Skills load name+description at startup, full content on invocation → Keeps context efficient
 - 🎯 **Tool availability**: Agents can be read-only (exploration) or read-write (task completion) → Tools shape behavior
 - 💬 **Interaction model**: Commands execute, Skills interact, Agents coach, Rules guide passively
+- 🔐 **Principle of Least Privilege**: Read-only agents can invoke write-capable Skills → Agent coordinates, Skill executes with full permissions
+- 📂 **Modular configuration**: Rules are a modular alternative to monolithic CLAUDE.md files → Split concerns across multiple focused files
 
 **Not sure which to use?** Invoke `/toolkit-choose-artifact` for an interactive decision helper.
 
-### 🎯 Three-Tier Development Model
+## 🎯 Three-Tier Development Model
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -128,7 +145,7 @@ Claude Code supports five artifact types. Each has different characteristics for
 - ✅ Automatic backups before linking
 - ✅ Explicit user control at every step
 
-### 📊 Measurable Impact
+### 📊 Measurable Impact (Coming Soon?)
 
 - Track which configs are most used
 - Measure team productivity improvements
@@ -147,9 +164,10 @@ Claude Code supports five artifact types. Each has different characteristics for
 - Cross-project utilities (e.g., `/explain-thoroughly`)
 - Individual productivity tools
 
-## Toolkit Meta-Tools
+## Further Documentaton
 
-The **toolkit** namespace provides tools for managing Claude Code configurations:
+<details>
+<summary>Interactive Skills</summary>
 
 **Interactive Skills:**
 - `/toolkit-choose-artifact` - Help choosing the right artifact type (command/skill/agent/rule/plan)
@@ -157,14 +175,27 @@ The **toolkit** namespace provides tools for managing Claude Code configurations
 - `/toolkit-validate` - Validate frontmatter metadata
 - `/toolkit-handover` - Create and manage session handovers
 
+
+</details>
+<details>
+<summary>Quick Commands</summary>
+
 **Quick Commands:**
 - `/toolkit-new-handover` - Create session handover document
 - `/toolkit-graduate` - Graduate working plan to formal plan
 - `/toolkit-archive` - Archive completed handovers
 
+</details>
+<details>
+<summary>Standards & Guides</summary>
+
 **Standards & Guides:**
-- `rules/toolkit-` - Naming conventions, frontmatter standards, workspace separation
-- `agents/toolkit-` - Expert guidance on workflows, planning, architecture, contributing
+- `rules/toolkit-*` - Naming conventions, frontmatter standards, workspace separation
+- `agents/toolkit-*` - Expert guidance on workflows, planning, architecture, contributing
+
+</details>
+<details>
+<summary>Browseable Documentation</summary>
 
 ## Browsing Documentation
 
@@ -176,6 +207,10 @@ make serve
 
 This starts docsify, which renders all markdown files in a searchable web interface with navigation sidebar.
 
+</details>
+<details>
+<summary>Makefile commands</summary>
+
 **Makefile commands:**
 ```bash
 make help      # Show all available commands
@@ -183,20 +218,22 @@ make test      # Run validation checks
 make validate  # Check frontmatter
 ```
 
-## Directory Structure
+</details>
+<details>
+<summary>Directory Structure</summary>
 
 ### This Config Repo (toolkit-config/)
 
 ```
-toolkit-config/           # The config repository
+toolkit-config/                 # The config repository
 ├── README.md                   # This file
 ├── Makefile                    # Development tasks
 ├── index.html                  # Docsify documentation browser
 │
-├── commands/toolkit-              # Toolkit commands (git-tracked)
-├── skills/toolkit/                # Toolkit skills (git-tracked)
-├── agents/toolkit-                # Toolkit agents (git-tracked)
-├── rules/toolkit-                 # Toolkit rules (git-tracked)
+├── commands/toolkit-*          # Toolkit commands (git-tracked)
+├── skills/toolkit-*            # Toolkit skills (git-tracked)
+├── agents/toolkit-*            # Toolkit agents (git-tracked)
+├── rules/toolkit-*             # Toolkit rules (git-tracked)
 │
 ├── plans/                      # Working plans (git-ignored content)
 │   ├── README.md               # How to use plans/
@@ -209,28 +246,9 @@ toolkit-config/           # The config repository
     └── *.md                    # Your handovers (git-ignored)
 ```
 
-### Project Using This Config (your-project/)
-
-When this config is linked to a project via git submodule:
-
-```
-your-project/                      # Your actual project
-├── .claude/                    # Git submodule → myteam-claude-config
-│   ├── commands/toolkit-          # Team commands (from submodule)
-│   ├── skills/toolkit/            # Team skills (from submodule)
-│   ├── agents/toolkit-            # Team agents (from submodule)
-│   └── rules/toolkit-             # Team rules (from submodule)
-│
-├── plans/                      # Working plans (git-ignored)
-│   └── *.md                    # Your project planning docs
-│
-└── sessions/                   # Session continuity (git-ignored)
-    └── *.md                    # Your session handovers
-```
-
-**Key insight:** `sessions/` and `plans/` exist in BOTH repos, but serve different purposes:
-- **In config repo:** Workspace for developing Toolkit configs
-- **In project repo:** Workspace for using Toolkit configs to build your project
+</details>
+<details>
+<summary>Git-Ignore Philosophy</summary>
 
 ## Git-Ignore Philosophy
 
@@ -256,6 +274,10 @@ sessions/*.md
 1. **Config repo:** When developing Toolkit, you need workspace for drafts and session continuity
 2. **Project repo:** When using Toolkit, you need workspace for planning features and resuming work
 3. **Both cases:** The directories must exist, but your personal content stays private
+
+</details>
+<details>
+<summary>Using Without Toolkit</summary>
 
 ## Using Without Toolkit
 
@@ -319,6 +341,10 @@ echo ".claude/plans/*.md" >> .gitignore
 - Git-based distribution
 
 Toolkit provides automation and starters, but the core pattern is just directories and git.
+
+</details>
+<details>
+<summary>Full Getting Started Guide</summary>
 
 ## Getting Started
 
@@ -400,29 +426,15 @@ Toolkit provides automation and starters, but the core pattern is just directori
 
 **More details:** Run `make serve` to browse full documentation at http://localhost:3000
 
-## Quick Reference
 
-## Contributing
-
-**Quick start:**
-1. Run `/toolkit-setup` to initialize your workspace
-2. Run `/toolkit-choose-artifact` to choose the right artifact type
-3. Create your artifact in the appropriate directory
-4. Test it, then submit a PR
-
-**Detailed guides:**
-- `agents/toolkit-contributing.md` - **Comprehensive contribution guide** (workflow, quality standards, examples)
-- `agents/toolkit-workflows.md` - Development workflows (session, planning)
-- `agents/toolkit-organization.md` - File organization patterns
-- `agents/toolkit-team-workflows.md` - Team workflows (PR testing, releases, upgrades)
-
-**Standards:**
-- `rules/toolkit-naming-conventions.md` - File naming standards
-- `rules/toolkit-frontmatter-standards.md` - Metadata conventions
-- `rules/toolkit-workspace-separation.md` - Workshop vs product philosophy
+</details>
+<details>
+<summary>Support</summary>
 
 ## Support
 
 - **Questions?** Run `make serve` to browse all documentation
 - **Issues?** Open a GitHub issue
 - **Stuck?** Use the Toolkit skills and agents - they're designed to help!
+
+</details>

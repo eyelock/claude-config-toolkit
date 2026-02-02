@@ -138,10 +138,12 @@ You said you want to **provide expert knowledge/coaching**.
 **Does it need to execute operations?**
 
 **A. Yes - write code, edit files**
-→ ⚠️ Agents can have write tools, but consider:
-- If workflow-driven → **Skill** might be better
-- If exploration only → Agent with read-only tools
-- If task completion → Agent with write tools
+→ ✅ Use **Agent with Skill delegation**
+- **Best practice:** Agent is read-only, invokes write-capable Skills
+- Follows Principle of Least Privilege
+- Example: `toolkit-workflows` agent invokes `/toolkit-new-handover` skill
+- Agent coordinates, Skill executes
+- See `rules/toolkit-agents.md` for details
 
 **B. No - just coaching/guidance**
 → ✅ Use **Agent** for ongoing coaching
@@ -253,9 +255,11 @@ You said you want to **provide expert knowledge/coaching**.
 
 **Tool availability:**
 - Can specify tool subset for agent
-- Read-only agents (exploration/planning)
-- Read-write agents (task completion)
-- Tool availability shapes agent behavior
+- **Best practice:** Read-only agents + Skill tool for delegation
+- Agents invoke Skills when write operations needed
+- Skills run with their own permissions (not limited by agent)
+- Example: Read-only agent → invokes write-capable skill
+- See `rules/toolkit-agents.md` for architecture details
 
 **Interaction model:**
 - LLM-direct (not user-interactive)
@@ -269,11 +273,15 @@ You said you want to **provide expert knowledge/coaching**.
 - ✅ Best practices guidance
 - ✅ Specialized knowledge areas
 - ✅ Session-start guidance
+- ✅ Coordinating workflows (read-only agent + Skill delegation)
 
 **Examples:**
-- `agents/toolkit-workspace-setup.md` - Workspace expertise
-- `agents/toolkit-planning-guide.md` - Planning coaching
-- `agents/api-expert.md` - API design guidance
+- `agents/toolkit-architecture` - System architecture reference (read-only)
+- `agents/toolkit-workflows` - Workflow coordinator (invokes skills)
+- `agents/toolkit-organization` - Validator/fixer (can move files + invoke skills)
+- `agents/toolkit-scripts-guide` - Script helper (write-capable)
+
+**See also:** `rules/toolkit-agents.md` for agent architecture standards
 
 **When NOT to use:**
 - ❌ Long-running conversations → Use Skill (no dilution)
@@ -292,6 +300,7 @@ You said you want to **provide expert knowledge/coaching**.
 
 **What they are:**
 - Standards, conventions, patterns
+- **Modular alternative to monolithic CLAUDE.md files**
 - Always loaded at session start
 - Passive influence on behavior
 - Quick reference guides
@@ -318,6 +327,7 @@ You said you want to **provide expert knowledge/coaching**.
 - ✅ Code style guidelines
 - ✅ When to use patterns
 - ✅ Quick reference material
+- ✅ Breaking up large CLAUDE.md files into focused, modular pieces
 
 **Examples:**
 - `rules/toolkit-naming-conventions.md`

@@ -108,10 +108,10 @@ install:
 
 validate:
 	@echo "Validating frontmatter in session and plan files..."
-	@if [ -f skills/toolkit/validate/validate-frontmatter.sh ]; then \
-		bash skills/toolkit/validate/validate-frontmatter.sh; \
+	@if [ -f skills/toolkit-validate/validate-frontmatter.sh ]; then \
+		bash skills/toolkit-validate/validate-frontmatter.sh; \
 	else \
-		echo "⚠️  Validation script not found at skills/toolkit/validate/validate-frontmatter.sh"; \
+		echo "⚠️  Validation script not found at skills/toolkit-validate/validate-frontmatter.sh"; \
 		echo "Checking for required frontmatter fields manually..."; \
 		for file in sessions/*.md plans/*.md; do \
 			if [ -f "$$file" ] && [ "$$(basename $$file)" != "README.md" ] && [ "$$(basename $$file)" != "TEMPLATE.md" ]; then \
@@ -188,6 +188,43 @@ test: validate
 		fi; \
 	else \
 		echo "  ℹ️  No skills directory to check"; \
+	fi
+	@echo ""
+	@echo "6. Validating agent frontmatter..."
+	@if [ -d agents ]; then \
+		AGENT_ERRORS=0; \
+		for agent_file in agents/toolkit-*.md; do \
+			[ -f "$$agent_file" ] || continue; \
+			agent_basename=$$(basename "$$agent_file" .md); \
+			if ! grep -q "^---" "$$agent_file"; then \
+				echo "  ❌ $$agent_file: Missing frontmatter"; \
+				AGENT_ERRORS=$$((AGENT_ERRORS + 1)); \
+				continue; \
+			fi; \
+			agent_name=$$(sed -n '/^---/,/^---/p' "$$agent_file" | grep "^name:" | head -1 | sed 's/name: *//'); \
+			if [ -z "$$agent_name" ]; then \
+				echo "  ❌ $$agent_file: Missing 'name' field in frontmatter"; \
+				AGENT_ERRORS=$$((AGENT_ERRORS + 1)); \
+			elif [ "$$agent_name" != "$$agent_basename" ]; then \
+				echo "  ❌ $$agent_file: name '$$agent_name' ≠ filename '$$agent_basename'"; \
+				AGENT_ERRORS=$$((AGENT_ERRORS + 1)); \
+			fi; \
+			agent_description=$$(sed -n '/^---/,/^---/p' "$$agent_file" | grep "^description:" | head -1); \
+			if [ -z "$$agent_description" ]; then \
+				echo "  ❌ $$agent_file: Missing 'description' field in frontmatter"; \
+				AGENT_ERRORS=$$((AGENT_ERRORS + 1)); \
+			fi; \
+		done; \
+		if [ $$AGENT_ERRORS -eq 0 ]; then \
+			echo "  ✅ All agent frontmatter valid"; \
+		else \
+			echo ""; \
+			echo "  ⚠️  Found $$AGENT_ERRORS agent frontmatter error(s)"; \
+			echo "  See rules/toolkit-agents.md for standards"; \
+			exit 1; \
+		fi; \
+	else \
+		echo "  ℹ️  No agents directory to check"; \
 	fi
 	@echo ""
 	@echo "✅ All checks complete"

@@ -1,3 +1,10 @@
+---
+name: toolkit-architecture
+description: Expert guidance on Toolkit architecture, design decisions, and system structure. Use when users need to understand the dual-layer model, git distribution, namespaces, or how components fit together.
+tools: Read, Grep, Glob
+model: inherit
+---
+
 # Toolkit Architecture Agent
 
 You are an expert in explaining the architecture of the Toolkit configuration system.
@@ -55,7 +62,7 @@ When users need to understand the system architecture, you:
 graph TB
     subgraph "Config Repo (toolkit-config)"
         CR[commands/toolkit-]
-        SR[skills/toolkit/]
+        SR[skills/toolkit-]
         AR[agents/toolkit-]
         RR[rules/toolkit-]
         PR[plans/]
@@ -171,7 +178,7 @@ git commit -m "Update Claude configs to v1.2.0"
 **Structure:**
 ```
 commands/toolkit-     - Toolkit commands
-skills/toolkit/       - Toolkit skills
+skills/toolkit-       - Toolkit skills
 agents/toolkit-       - Toolkit agents (YOU ARE HERE)
 rules/toolkit-        - Toolkit rules
 ```
@@ -226,7 +233,7 @@ Executable operations:
 - `graduate.md` - Promote working plan to formal
 - `archive.md` - Archive completed handovers
 
-### Skills (`skills/toolkit/`)
+### Skills (`skills/toolkit-`)
 
 Interactive workflows:
 - `setup/` - Initialize workspace structure

@@ -36,7 +36,7 @@ After testing your experiment locally, promote it to share with the team:
 **✓ Accepted:**
 - Plans: `*.local.md` → committed plans
 - Commands: `my-cmd.local.md` → `.claude/commands/toolkit-my-cmd.md`
-- Skills: `my-skill.local/` → `.claude/skills/toolkit/my-skill/`
+- Skills: `my-skill.local/` → `.claude/skills/toolkit-my-skill/`
 - Agents: `my-agent.local.md` → `.claude/agents/toolkit-my-agent.md`
 - Rules: `my-rule.local.md` → `.claude/rules/toolkit-my-rule.md`
 
