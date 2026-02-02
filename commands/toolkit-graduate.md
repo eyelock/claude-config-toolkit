@@ -1,14 +1,14 @@
 # Graduate Plan
 
-**Command:** `/llmc-graduate <plan-name>`
+**Command:** `/toolkit-graduate <plan-name>`
 
 **Purpose:** Graduate a working plan from `plans/` to `plans/` (team-shared).
 
 ## Usage
 
 ```
-/llmc-graduate 2026-02-02-auth-approach
-/llmc-graduate 2026-02-05-api-design
+/toolkit-graduate 2026-02-02-auth-approach
+/toolkit-graduate 2026-02-05-api-design
 ```
 
 ## What It Does
@@ -120,5 +120,5 @@ Implementation steps:
 
 ## See Also
 
-- `agents/llmc-planning-guide.md` - Planning workflow guide
+- `agents/toolkit-planning-guide.md` - Planning workflow guide
 - `plans/README-EXAMPLE-GRADUATION.md` - Detailed before/after example

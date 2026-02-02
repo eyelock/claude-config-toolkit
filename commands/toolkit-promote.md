@@ -1,5 +1,5 @@
 ---
-name: llmc/promote
+name: toolkit/promote
 description: Promote a local experiment (*.local.*) to team-level configuration. Handles plans only (not sessions).
 ---
 
@@ -18,27 +18,27 @@ After testing your experiment locally, promote it to share with the team:
 ## Usage
 
 ```bash
-/llmc-promote <file-path>
+/toolkit-promote <file-path>
 ```
 
 **Examples:**
 
 ```bash
 # Promote a plan
-/llmc-promote plans/my-feature.local.md
+/toolkit-promote plans/my-feature.local.md
 
 # Promote from .claude/plans/
-/llmc-promote .claude/plans/auth-helper.local.md
+/toolkit-promote .claude/plans/auth-helper.local.md
 ```
 
 ## What Gets Promoted
 
 **✓ Accepted:**
 - Plans: `*.local.md` → committed plans
-- Commands: `my-cmd.local.md` → `.claude/commands/llmc-my-cmd.md`
-- Skills: `my-skill.local/` → `.claude/skills/llmc/my-skill/`
-- Agents: `my-agent.local.md` → `.claude/agents/llmc-my-agent.md`
-- Rules: `my-rule.local.md` → `.claude/rules/llmc-my-rule.md`
+- Commands: `my-cmd.local.md` → `.claude/commands/toolkit-my-cmd.md`
+- Skills: `my-skill.local/` → `.claude/skills/toolkit/my-skill/`
+- Agents: `my-agent.local.md` → `.claude/agents/toolkit-my-agent.md`
+- Rules: `my-rule.local.md` → `.claude/rules/toolkit-my-rule.md`
 
 **✗ Rejected:**
 - Sessions (never promoted)
@@ -56,11 +56,11 @@ SOURCE="$1"
 if [ -z "$SOURCE" ]; then
     echo "❌ Error: No file specified"
     echo ""
-    echo "Usage: /llmc-promote <file-path>"
+    echo "Usage: /toolkit-promote <file-path>"
     echo ""
     echo "Examples:"
-    echo "  /llmc-promote plans/my-feature.local.md"
-    echo "  /llmc-promote .claude/plans/auth.local.md"
+    echo "  /toolkit-promote plans/my-feature.local.md"
+    echo "  /toolkit-promote .claude/plans/auth.local.md"
     exit 1
 fi
 
@@ -109,9 +109,9 @@ if [ -d "$SOURCE" ]; then
 
     # Determine target based on current location
     if [[ "$DIRNAME" == *".claude/plans"* ]]; then
-        TARGET_DIR=".claude/skills/llmc"
+        TARGET_DIR=".claude/skills/toolkit"
     else
-        TARGET_DIR="skills/llmc"
+        TARGET_DIR="skills/toolkit"
     fi
 
     TARGET="$TARGET_DIR/$TARGET_NAME"
@@ -149,18 +149,18 @@ else
     # Determine target directory
     if [[ "$DIRNAME" == *".claude/"* ]]; then
         case $ARTIFACT_TYPE in
-            command) TARGET_DIR=".claude/commands/llmc" ;;
-            skill) TARGET_DIR=".claude/skills/llmc" ;;
-            agent) TARGET_DIR=".claude/agents/llmc" ;;
-            rule) TARGET_DIR=".claude/rules/llmc" ;;
+            command) TARGET_DIR=".claude/commands/toolkit" ;;
+            skill) TARGET_DIR=".claude/skills/toolkit" ;;
+            agent) TARGET_DIR=".claude/agents/toolkit" ;;
+            rule) TARGET_DIR=".claude/rules/toolkit" ;;
             plan) TARGET_DIR=".claude/plans" ;;
         esac
     else
         case $ARTIFACT_TYPE in
-            command) TARGET_DIR="commands/llmc" ;;
-            skill) TARGET_DIR="skills/llmc" ;;
-            agent) TARGET_DIR="agents/llmc" ;;
-            rule) TARGET_DIR="rules/llmc" ;;
+            command) TARGET_DIR="commands/toolkit" ;;
+            skill) TARGET_DIR="skills/toolkit" ;;
+            agent) TARGET_DIR="agents/toolkit" ;;
+            rule) TARGET_DIR="rules/toolkit" ;;
             plan) TARGET_DIR="plans" ;;
         esac
     fi
@@ -216,7 +216,7 @@ echo ""
 if [[ "$TARGET" == ".claude/"* ]]; then
     echo "   1. Stage the change in submodule:"
     echo "      cd .claude"
-    echo "      git add $ARTIFACT_TYPE"s/llmc/$TARGET_NAME""
+    echo "      git add $ARTIFACT_TYPE"s/toolkit/$TARGET_NAME""
     echo ""
     echo "   2. Commit:"
     echo "      git commit -m \"feat: add $TARGET_NAME $ARTIFACT_TYPE\""
@@ -225,7 +225,7 @@ if [[ "$TARGET" == ".claude/"* ]]; then
     echo "      git checkout -b feature/$TARGET_NAME"
     echo "      git push origin feature/$TARGET_NAME"
     echo ""
-    echo "   4. Open PR in LLMC repo for team review"
+    echo "   4. Open PR in Toolkit repo for team review"
 else
     echo "   1. Stage the change:"
     echo "      git add $TARGET"
@@ -245,7 +245,7 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 ### Promote a Plan to Command
 
 ```bash
-$ /llmc-promote .claude/plans/my-helper.local.md
+$ /toolkit-promote .claude/plans/my-helper.local.md
 
 🚀 Promoting Local Experiment
 Source: .claude/plans/my-helper.local.md
@@ -259,20 +259,20 @@ This is a plan. Where should it go?
 
 Choose (1-5): 1
 
-Target: .claude/commands/llmc-my-helper.md
+Target: .claude/commands/toolkit-my-helper.md
 Type: command
 
 Proceed? (y/n): y
 
 ✅ Promotion complete!
 
-Next: cd .claude && git add commands/llmc-my-helper.md
+Next: cd .claude && git add commands/toolkit-my-helper.md
 ```
 
 ### Error: Trying to Promote a Session
 
 ```bash
-$ /llmc-promote sessions/2026-02-01-work.md
+$ /toolkit-promote sessions/2026-02-01-work.md
 
 ❌ Error: Cannot promote sessions
 
@@ -282,6 +282,6 @@ Only plans and artifacts can be promoted.
 
 ## See Also
 
-- `/llmc-choose-artifact` - Create local experiments
-- `/llmc-setup` - Initialize workspace
-- `rules/llmc-workspace-separation.md` - Local vs team philosophy
+- `/toolkit-choose-artifact` - Create local experiments
+- `/toolkit-setup` - Initialize workspace
+- `rules/toolkit-workspace-separation.md` - Local vs team philosophy

@@ -1,4 +1,4 @@
-# LLMC Session Continuity
+# Toolkit Session Continuity
 
 Session handovers bridge the gap between stateless AI conversations. Follow these practices:
 
@@ -101,7 +101,7 @@ mv sessions/2026-02-01-feature.md \
 
 **Option 3: Helper command**
 ```bash
-/llmc-archive  # Uses command to archive automatically
+/toolkit-archive  # Uses command to archive automatically
 ```
 
 ## Status Progression

@@ -1,6 +1,6 @@
-# LLMC Frontmatter Standards
+# Toolkit Frontmatter Standards
 
-When working with LLMC session workspace files, follow these frontmatter conventions:
+When working with Toolkit session workspace files, follow these frontmatter conventions:
 
 ## Naming Convention
 

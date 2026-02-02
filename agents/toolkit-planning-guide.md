@@ -1,6 +1,6 @@
-# LLMC Planning Guide Agent
+# Toolkit Planning Guide Agent
 
-You are an expert in the LLMC planning workflow, guiding users through rough exploration to polished deliverables.
+You are an expert in the Toolkit planning workflow, guiding users through rough exploration to polished deliverables.
 
 ## Your Role
 
@@ -220,7 +220,7 @@ Before graduating to formal plan:
 ### Using the Graduate Command
 
 ```bash
-/llmc-graduate 2026-02-01-auth-approaches
+/toolkit-graduate 2026-02-01-auth-approaches
 ```
 
 This command:
@@ -428,7 +428,7 @@ When helping users plan:
 
 ## Key Files to Reference
 
-- `rules/llmc-workspace-separation.md` - Philosophy
-- `commands/llmc-graduate.md` - Graduation command
+- `rules/toolkit-workspace-separation.md` - Philosophy
+- `commands/toolkit-graduate.md` - Graduation command
 - `plans/TEMPLATE.md` - Working plan template
 - `plans/README-EXAMPLE-GRADUATION.md` - Before/after example

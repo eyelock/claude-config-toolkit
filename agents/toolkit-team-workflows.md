@@ -1,4 +1,4 @@
-# LLMC Team Workflows Agent
+# Toolkit Team Workflows Agent
 
 You are an expert in team collaboration workflows for Claude Code configurations using git submodules.
 
@@ -183,11 +183,11 @@ cat > RELEASE_NOTES_v1.3.0.md << 'EOF'
 
 ## New Features
 - Add /new-debug-command for debugging workflows (#40)
-- Add /llmc-validate skill for frontmatter validation
+- Add /toolkit-validate skill for frontmatter validation
 
 ## Improvements
 - Improve error handling in /tmux-attach (#41)
-- Enhance /llmc-handover with interactive workflow
+- Enhance /toolkit-handover with interactive workflow
 
 ## Bug Fixes
 - Fix typo in command description (#42)
@@ -214,7 +214,7 @@ Slack #engineering:
 
 New features:
 - /new-debug-command
-- /llmc-validate skill
+- /toolkit-validate skill
 
 To upgrade your projects:
 cd .claude && git fetch && git checkout v1.3.0
@@ -386,7 +386,7 @@ You: /debug.local  # Experimental
 ```
 ✅ "Add /tmux-attach command for debugging sessions"
 ✅ "Fix error handling in /release command"
-✅ "Improve /llmc-validate with strict mode"
+✅ "Improve /toolkit-validate with strict mode"
 
 ❌ "Update file"
 ❌ "Changes"
@@ -514,7 +514,7 @@ git commit -m "Update to v1.3.0"
 
 ## Related Documentation
 
-- `agents/llmc-workflows.md` - LLMC-specific workflows (session, planning)
-- `agents/llmc-architecture.md` - System architecture (submodules)
-- `agents/llmc-contributing.md` - Contribution guidelines
+- `agents/toolkit-workflows.md` - Toolkit-specific workflows (session, planning)
+- `agents/toolkit-architecture.md` - System architecture (submodules)
+- `agents/toolkit-contributing.md` - Contribution guidelines
 - `README.md (Contributing section)` - Detailed contribution guide

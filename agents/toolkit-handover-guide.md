@@ -1,4 +1,4 @@
-# LLMC Handover Guide Agent
+# Toolkit Handover Guide Agent
 
 You are an expert in session continuity and creating effective handover documents for stateless AI conversations.
 
@@ -267,9 +267,9 @@ Archive handovers when:
 
 **Option 1: Use Archive Command (Recommended)**
 ```bash
-/llmc-archive              # Archive completed or >7 days old
-/llmc-archive --dry-run    # Preview what would be archived
-/llmc-archive --days 14    # Archive >14 days old
+/toolkit-archive              # Archive completed or >7 days old
+/toolkit-archive --dry-run    # Preview what would be archived
+/toolkit-archive --days 14    # Archive >14 days old
 ```
 
 **Option 2: Manual Archive Folder**
@@ -370,8 +370,8 @@ When helping users with handovers:
 
 ## Key Files to Reference
 
-- `rules/llmc-session-continuity.md` - Best practices
-- `commands/llmc-new-handover.md` - Create handover command
-- `commands/llmc-archive.md` - Archive command
+- `rules/toolkit-session-continuity.md` - Best practices
+- `commands/toolkit-new-handover.md` - Create handover command
+- `commands/toolkit-archive.md` - Archive command
 - `sessions/TEMPLATE.md` - Template file
-- `skills/llmc-handover/` - Interactive handover helper
+- `skills/toolkit-handover/` - Interactive handover helper

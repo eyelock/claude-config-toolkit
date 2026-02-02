@@ -48,24 +48,24 @@ Merge to main                 (team gets it)
 
 ## Documentation
 
-**Full details:** Browse with `make serve` or read agents in `agents/llmc-`
+**Full details:** Browse with `make serve` or read agents in `agents/toolkit-`
 
 **Key agents:**
-- `agents/llmc-architecture.md` - System architecture
-- `agents/llmc-workflows.md` - Common workflows
-- `agents/llmc-organization.md` - File organization
+- `agents/toolkit-architecture.md` - System architecture
+- `agents/toolkit-workflows.md` - Common workflows
+- `agents/toolkit-organization.md` - File organization
 
 ## Helper Commands
 
 ```bash
 # Create new handover document (auto-dated)
-/llmc-new-handover feature-design
+/toolkit-new-handover feature-design
 
 # Graduate a plan to .claude/
-/llmc-graduate 2026-02-01-auth-approach
+/toolkit-graduate 2026-02-01-auth-approach
 
 # Clean up old handovers
-/llmc-archive
+/toolkit-archive
 ```
 
 ---
@@ -77,7 +77,7 @@ Merge to main                 (team gets it)
 - `plans/` - Working drafts (YYYY-MM-DD-*.md)
 
 **Team Config (git-tracked):**
-- `commands/llmc-`, `skills/llmc/`, `agents/llmc-`, `rules/llmc-` - LLMC artifacts
+- `commands/toolkit-`, `skills/toolkit/`, `agents/toolkit-`, `rules/toolkit-` - Toolkit artifacts
 - `plans/` - Formal plans when committed (optional)
 
 **Note:** When this repo is used as `.claude/` submodule in projects, committed plans appear as `.claude/plans/`

@@ -1,6 +1,6 @@
-# LLMC Workspace Separation
+# Toolkit Workspace Separation
 
-The LLMC workspace uses git-ignored working directories for development. Follow these rules:
+The Toolkit workspace uses git-ignored working directories for development. Follow these rules:
 
 ## The Structure
 
@@ -54,7 +54,7 @@ plans/2026-02-02-rough-idea.md    # Exploring 3 approaches (git-ignored)
 plans/final-idea.md is now tracked  # Team gets it via submodule
 ```
 
-Or use `/llmc-graduate <plan-name>` to rename and commit in one step.
+Or use `/toolkit-graduate <plan-name>` to rename and commit in one step.
 
 ## When to Commit Plans
 

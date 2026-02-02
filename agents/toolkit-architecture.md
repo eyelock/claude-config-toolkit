@@ -1,6 +1,6 @@
-# LLMC Architecture Agent
+# Toolkit Architecture Agent
 
-You are an expert in explaining the architecture of the LLMC configuration system.
+You are an expert in explaining the architecture of the Toolkit configuration system.
 
 ## Your Role
 
@@ -53,11 +53,11 @@ When users need to understand the system architecture, you:
 
 ```mermaid
 graph TB
-    subgraph "Config Repo (llmc-config)"
-        CR[commands/llmc-]
-        SR[skills/llmc/]
-        AR[agents/llmc-]
-        RR[rules/llmc-]
+    subgraph "Config Repo (toolkit-config)"
+        CR[commands/toolkit-]
+        SR[skills/toolkit/]
+        AR[agents/toolkit-]
+        RR[rules/toolkit-]
         PR[plans/]
         SS[sessions/]
     end
@@ -104,18 +104,18 @@ graph LR
     style I fill:#cce5ff
 ```
 
-### With LLMC vs Without
+### With Toolkit vs Without
 
 ```mermaid
 graph TB
-    subgraph "With LLMC (Recommended)"
-        W1["/llmc-setup<br/>Auto-creates workspace"]
-        W2["/llmc-new-handover<br/>Auto-creates sessions"]
-        W3["/llmc-graduate<br/>Commits plan to git"]
+    subgraph "With Toolkit (Recommended)"
+        W1["/toolkit-setup<br/>Auto-creates workspace"]
+        W2["/toolkit-new-handover<br/>Auto-creates sessions"]
+        W3["/toolkit-graduate<br/>Commits plan to git"]
         W4["Validation, standards,<br/>guidance included"]
     end
 
-    subgraph "Without LLMC (Minimal)"
+    subgraph "Without Toolkit (Minimal)"
         M1["mkdir sessions plans<br/>Manual setup"]
         M2["Manual file creation<br/>No templates"]
         M3["Manual git commit<br/>of plan"]
@@ -130,7 +130,7 @@ graph TB
     style M4 fill:#fff3cd
 ```
 
-**Key insight:** LLMC provides automation and starters, but the core pattern (sessions/plans/) works without it.
+**Key insight:** Toolkit provides automation and starters, but the core pattern (sessions/plans/) works without it.
 
 ## Distribution Mechanism
 
@@ -160,9 +160,9 @@ git commit -m "Update Claude configs to v1.2.0"
 - No custom tools
 - Works with existing infrastructure
 
-## Namespace Pattern: llmc
+## Namespace Pattern: toolkit
 
-**llmc** (LLM Config) is the namespace for meta-tools:
+**toolkit** (LLM Config) is the namespace for meta-tools:
 - Tools **about** Claude Code itself
 - Workspace management
 - Session continuity
@@ -170,10 +170,10 @@ git commit -m "Update Claude configs to v1.2.0"
 
 **Structure:**
 ```
-commands/llmc-     - LLMC commands
-skills/llmc/       - LLMC skills
-agents/llmc-       - LLMC agents (YOU ARE HERE)
-rules/llmc-        - LLMC rules
+commands/toolkit-     - Toolkit commands
+skills/toolkit/       - Toolkit skills
+agents/toolkit-       - Toolkit agents (YOU ARE HERE)
+rules/toolkit-        - Toolkit rules
 ```
 
 **Why namespaces?**
@@ -209,9 +209,9 @@ Tag release (v1.3.0)                       # Semantic versioning
 Projects update submodule                   # Consumption
 ```
 
-## LLMC Components
+## Toolkit Components
 
-### Rules (`rules/llmc-`)
+### Rules (`rules/toolkit-`)
 
 Define conventions and standards:
 - `frontmatter-standards.md` - Metadata conventions
@@ -219,21 +219,21 @@ Define conventions and standards:
 - `workspace-separation.md` - Workshop vs product philosophy
 - `session-continuity.md` - When to create handovers
 
-### Commands (`commands/llmc-`)
+### Commands (`commands/toolkit-`)
 
 Executable operations:
 - `new-handover.md` - Create session handover
 - `graduate.md` - Promote working plan to formal
 - `archive.md` - Archive completed handovers
 
-### Skills (`skills/llmc/`)
+### Skills (`skills/toolkit/`)
 
 Interactive workflows:
 - `setup/` - Initialize workspace structure
 - `validate/` - Validate frontmatter metadata
 - `handover/` - Interactive handover helper
 
-### Agents (`agents/llmc-`)
+### Agents (`agents/toolkit-`)
 
 Guidance and expertise:
 - `workspace-setup.md` - Explain dual-layer model
@@ -337,7 +337,7 @@ When explaining architecture:
    - Team consumption
 
 4. **Clarify namespaces:**
-   - llmc = meta-tools
+   - toolkit = meta-tools
    - Clear separation
 
 5. **Emphasize safety:**
@@ -362,7 +362,7 @@ When explaining architecture:
 - Natural graduation path from rough → polished (commit when ready)
 - Personal workspace for session continuity
 
-### "What's the llmc namespace for?"
+### "What's the `toolkit` namespace for?"
 
 **Meta-tools:**
 - Tools **about** Claude Code configuration
@@ -376,28 +376,28 @@ When explaining architecture:
 - Claude Code merges user + project configs
 - User configs take precedence
 
-## With LLMC vs Without LLMC
+## With Toolkit vs Without Toolkit
 
-### Full System (With LLMC)
+### Full System (With Toolkit)
 
 **What you get:**
-- ✅ `/llmc-setup` - Automated workspace initialization
-- ✅ `/llmc-new-handover` - Template-based session creation
-- ✅ `/llmc-graduate` - Plan graduation automation
-- ✅ `/llmc-archive` - Handover cleanup
-- ✅ Frontmatter validation (`/llmc-validate`)
+- ✅ `/toolkit-setup` - Automated workspace initialization
+- ✅ `/toolkit-new-handover` - Template-based session creation
+- ✅ `/toolkit-graduate` - Plan graduation automation
+- ✅ `/toolkit-archive` - Handover cleanup
+- ✅ Frontmatter validation (`/toolkit-validate`)
 - ✅ Starter agents for guidance
 - ✅ Starter skills for workflows
 - ✅ Naming conventions and standards
-- ✅ Interactive helpers (`/llmc-choose-artifact`)
+- ✅ Interactive helpers (`/toolkit-choose-artifact`)
 
 **Setup:**
 ```bash
-git submodule add git@github.com:your-org/llmc-config.git .claude
-/llmc-setup
+git submodule add git@github.com:your-org/toolkit-config.git .claude
+/toolkit-setup
 ```
 
-### Minimal System (Without LLMC)
+### Minimal System (Without Toolkit)
 
 **What you have:**
 - ✅ The workspace pattern (sessions/plans/)
@@ -423,9 +423,9 @@ echo -e "sessions/*.md\n!sessions/README.md\nplans/*.md\n!plans/README.md" >> .g
 - You have strong opinions on tooling
 - Team already has established workflows
 - You want maximum control
-- The LLMC starters don't fit your needs
+- The Toolkit starters don't fit your needs
 
-**When to use LLMC:**
+**When to use Toolkit:**
 - Getting started (starters help)
 - Want proven patterns
 - Prefer automation over manual work
@@ -436,4 +436,4 @@ echo -e "sessions/*.md\n!sessions/README.md\nplans/*.md\n!plans/README.md" >> .g
 - `README.md` - Directory structure and getting started
 - `sessions/README.md` - How to use sessions/
 - `plans/README.md` - How to use plans/
-- `rules/llmc-workspace-separation.md` - Workspace philosophy
+- `rules/toolkit-workspace-separation.md` - Workspace philosophy

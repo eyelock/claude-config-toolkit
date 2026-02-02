@@ -1,9 +1,9 @@
 ---
-name: llmc-handover
+name: toolkit-handover
 description: Interactive helper for creating, updating, and managing session handover documents. Guides users through proper context capture for session continuity across stateless AI conversations.
 ---
 
-# LLMC Handover Helper
+# Toolkit Handover Helper
 
 Interactive guidance for session continuity through structured handovers.
 
@@ -97,16 +97,16 @@ Optionally runs validation to ensure:
 
 ```
 # Start interactive handover workflow
-/llmc-handover
+/toolkit-handover
 
 # Quick create (skip interactive mode)
-/llmc-handover create "api-implementation"
+/toolkit-handover create "api-implementation"
 
 # Update existing handover
-/llmc-handover update 2026-02-02-api-implementation
+/toolkit-handover update 2026-02-02-api-implementation
 
 # Archive completed work
-/llmc-handover archive 2026-02-02-api-implementation
+/toolkit-handover archive 2026-02-02-api-implementation
 ```
 
 ## Quality Guidelines
@@ -173,7 +173,7 @@ The skill includes helper scripts as assets:
 ## Example Session
 
 ```
-User: /llmc-handover
+User: /toolkit-handover
 
 Claude: I'll help you with session handovers.
 
@@ -216,7 +216,7 @@ Claude: ✓ Created: sessions/2026-02-02-jwt-auth-implementation.md
 Next steps:
 1. Edit the file to add any additional notes
 2. Update status as you work
-3. Archive when complete: /llmc-handover archive jwt-auth-implementation
+3. Archive when complete: /toolkit-handover archive jwt-auth-implementation
 ```
 
 ## Assets
@@ -227,7 +227,7 @@ Next steps:
 
 ## See Also
 
-- `rules/llmc-session-continuity.md` - When to create handovers
-- `commands/llmc-new-handover.md` - Non-interactive command
-- `commands/llmc-archive.md` - Non-interactive archival
+- `rules/toolkit-session-continuity.md` - When to create handovers
+- `commands/toolkit-new-handover.md` - Non-interactive command
+- `commands/toolkit-archive.md` - Non-interactive archival
 - `sessions/TEMPLATE.md` - Handover template

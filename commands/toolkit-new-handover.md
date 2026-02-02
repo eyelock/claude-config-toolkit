@@ -1,15 +1,15 @@
 # Create New Handover
 
-**Command:** `/llmc-new-handover <description>`
+**Command:** `/toolkit-new-handover <description>`
 
 **Purpose:** Create a new session handover document with today's date and proper frontmatter.
 
 ## Usage
 
 ```
-/llmc-new-handover feature-design
-/llmc-new-handover bug-investigation
-/llmc-new-handover api-redesign
+/toolkit-new-handover feature-design
+/toolkit-new-handover bug-investigation
+/toolkit-new-handover api-redesign
 ```
 
 ## What It Does
@@ -48,19 +48,19 @@ echo ""
 echo "Next steps:"
 echo "  1. Edit the file and fill in context"
 echo "  2. Update status as you work"
-echo "  3. Archive when complete: /llmc-archive"
+echo "  3. Archive when complete: /toolkit-archive"
 ```
 
 ## Example Output
 
 ```bash
-$ /llmc-new-handover api-redesign
+$ /toolkit-new-handover api-redesign
 ✓ Created handover: sessions/2026-02-02-api-redesign.md
 
 Next steps:
   1. Edit the file and fill in context
   2. Update status as you work
-  3. Archive when complete: /llmc-archive
+  3. Archive when complete: /toolkit-archive
 ```
 
 ## Frontmatter Created
@@ -83,6 +83,6 @@ last_updated: "2026-02-02"
 
 ## See Also
 
-- `/llmc-archive` - Archive old session files
-- `skills/llmc-handover/` - Interactive session helper
+- `/toolkit-archive` - Archive old session files
+- `skills/toolkit-handover/` - Interactive session helper
 - `sessions/TEMPLATE.md` - Template used

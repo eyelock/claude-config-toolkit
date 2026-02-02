@@ -24,8 +24,8 @@ plans/                 # Working plans
 
 **The directories serve the same purpose in two contexts:**
 
-1. **Config repo:** Workspace for developing LLMC configs
-2. **Project repo:** Workspace for using LLMC to build projects
+1. **Config repo:** Workspace for developing Toolkit configs
+2. **Project repo:** Workspace for using Toolkit to build projects
 
 By using top-level directories with clear names, the pattern is obvious in both contexts.
 

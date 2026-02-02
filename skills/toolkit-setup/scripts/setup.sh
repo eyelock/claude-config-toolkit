@@ -1,33 +1,33 @@
 #!/bin/bash
 set -e
 
-echo "🏗️  LLMC Frictionless Setup"
+echo "🏗️  Toolkit Frictionless Setup"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo ""
 
 # Detect context
-# Check for LLMC repo by looking for flat llmc-* structure
+# Check for Toolkit repo by looking for flat toolkit-* structure
 if [ -d "commands" ] && [ -d "skills" ] && \
-   compgen -G "commands/llmc-*" > /dev/null && \
-   compgen -G "skills/llmc-*" > /dev/null; then
-    CONTEXT="llmc-repo"
-    echo "📍 Detected: LLMC repository (you're developing LLMC configs)"
-# Check for project with LLMC submodule
+   compgen -G "commands/toolkit-*" > /dev/null && \
+   compgen -G "skills/toolkit-*" > /dev/null; then
+    CONTEXT="toolkit-repo"
+    echo "📍 Detected: Toolkit repository (you're developing Toolkit configs)"
+# Check for project with Toolkit submodule
 elif [ -d ".claude/commands" ] && [ -d ".claude/skills" ] && \
-     (compgen -G ".claude/commands/llmc-*" > /dev/null || \
-      compgen -G ".claude/skills/llmc-*" > /dev/null); then
-    CONTEXT="project-with-llmc"
-    echo "📍 Detected: Project with LLMC submodule"
+     (compgen -G ".claude/commands/toolkit-*" > /dev/null || \
+      compgen -G ".claude/skills/toolkit-*" > /dev/null); then
+    CONTEXT="project-with-toolkit"
+    echo "📍 Detected: Project with Toolkit submodule"
 else
     CONTEXT="new-project"
-    echo "📍 Detected: New project (no LLMC yet)"
+    echo "📍 Detected: New project (no Toolkit yet)"
 fi
 
 echo ""
 
 # Branch based on context
 case $CONTEXT in
-    "llmc-repo")
+    "toolkit-repo")
         SESSIONS_DIR="sessions"
         PLANS_DIR="plans"
 
@@ -58,7 +58,7 @@ case $CONTEXT in
         fi
         ;;
 
-    "project-with-llmc")
+    "project-with-toolkit")
         SESSIONS_DIR=".claude/sessions"
         PLANS_DIR=".claude/plans"
 
@@ -97,23 +97,23 @@ case $CONTEXT in
         SESSIONS_DIR=".claude/sessions"
         PLANS_DIR=".claude/plans"
 
-        echo "No LLMC found. You can:"
-        echo "  1. Add LLMC as git submodule (recommended)"
+        echo "No Toolkit found. You can:"
+        echo "  1. Add Toolkit as git submodule (recommended)"
         echo "  2. Just create workspace structure"
         echo ""
 
         # Check if running interactively
         if [ -t 0 ]; then
-            read -p "Add LLMC submodule? (y/n): " add_submodule
+            read -p "Add Toolkit submodule? (y/n): " add_submodule
 
             if [ "$add_submodule" = "y" ]; then
-                read -p "Enter LLMC repo URL (e.g., git@github.com:your-org/llmc-config.git): " repo_url
+                read -p "Enter Toolkit repo URL (e.g., git@github.com:your-org/toolkit-config.git): " repo_url
                 if [ -n "$repo_url" ]; then
                     echo ""
                     echo "Adding submodule..."
                     git submodule add "$repo_url" .claude
                     git submodule update --init
-                    echo "✓ LLMC added as submodule"
+                    echo "✓ Toolkit added as submodule"
                     echo ""
                 fi
             fi
@@ -186,20 +186,20 @@ Examples:
 
 Create new handover:
 ```
-/llmc-new-handover <description>
+/toolkit-new-handover <description>
 ```
 
 Archive completed handovers:
 ```
-/llmc-archive
+/toolkit-archive
 ```
 
 ## See Also
 
 - `TEMPLATE.md` - Handover template with frontmatter
-- `rules/llmc-session-continuity.md` - Best practices
-- `commands/llmc-new-handover.md` - Create handover command
-- `commands/llmc-archive.md` - Archive completed work
+- `rules/toolkit-session-continuity.md` - Best practices
+- `commands/toolkit-new-handover.md` - Create handover command
+- `commands/toolkit-archive.md` - Archive completed work
 EOF
     echo "   ✓ Created $SESSIONS_DIR/README.md"
 fi
@@ -285,7 +285,7 @@ Plans start as git-ignored content where messy exploration is welcome:
 **Promoted to team** (git-tracked):
 - Remove `.local` from name
 - Example: `my-feature.md`
-- Use `/llmc-promote` to help with this
+- Use `/toolkit-promote` to help with this
 
 ## Naming Convention
 
@@ -308,8 +308,8 @@ Examples:
 ## See Also
 
 - `TEMPLATE.md` - Plan template
-- `commands/llmc-promote.md` - Promotion helper
-- `rules/llmc-workspace-separation.md` - Philosophy
+- `commands/toolkit-promote.md` - Promotion helper
+- `rules/toolkit-workspace-separation.md` - Philosophy
 EOF
     echo "   ✓ Created $PLANS_DIR/README.md"
 fi
@@ -385,11 +385,11 @@ echo ""
 
 # Context-specific next steps
 case $CONTEXT in
-    "llmc-repo")
+    "toolkit-repo")
         echo "📋 Next Steps:"
         echo ""
         echo "   1. (Optional) Install to user-level ~/.claude/?"
-        echo "      This makes /llmc-* commands available everywhere."
+        echo "      This makes /toolkit-* commands available everywhere."
         echo ""
 
         # Check if running interactively
@@ -408,29 +408,29 @@ case $CONTEXT in
             echo "   Installing to ~/.claude/..."
             mkdir -p "$USER_CLAUDE/skills" "$USER_CLAUDE/commands" "$USER_CLAUDE/agents" "$USER_CLAUDE/rules"
 
-            # Remove existing llmc-* symlinks if present
-            find "$USER_CLAUDE/skills" -type l -name "llmc-*" -delete 2>/dev/null || true
-            find "$USER_CLAUDE/commands" -type l -name "llmc-*" -delete 2>/dev/null || true
-            find "$USER_CLAUDE/agents" -type l -name "llmc-*" -delete 2>/dev/null || true
-            find "$USER_CLAUDE/rules" -type l -name "llmc-*" -delete 2>/dev/null || true
+            # Remove existing toolkit-* symlinks if present
+            find "$USER_CLAUDE/skills" -type l -name "toolkit-*" -delete 2>/dev/null || true
+            find "$USER_CLAUDE/commands" -type l -name "toolkit-*" -delete 2>/dev/null || true
+            find "$USER_CLAUDE/agents" -type l -name "toolkit-*" -delete 2>/dev/null || true
+            find "$USER_CLAUDE/rules" -type l -name "toolkit-*" -delete 2>/dev/null || true
 
             # Create individual symlinks for each artifact
-            for skill in "$REPO_DIR"/skills/llmc-*/; do
+            for skill in "$REPO_DIR"/skills/toolkit-*/; do
                 [ -d "$skill" ] && ln -s "$skill" "$USER_CLAUDE/skills/$(basename "$skill")"
             done
-            for cmd in "$REPO_DIR"/commands/llmc-*; do
+            for cmd in "$REPO_DIR"/commands/toolkit-*; do
                 [ -f "$cmd" ] && ln -s "$cmd" "$USER_CLAUDE/commands/$(basename "$cmd")"
             done
-            for agent in "$REPO_DIR"/agents/llmc-*; do
+            for agent in "$REPO_DIR"/agents/toolkit-*; do
                 [ -f "$agent" ] && ln -s "$agent" "$USER_CLAUDE/agents/$(basename "$agent")"
             done
-            for rule in "$REPO_DIR"/rules/llmc-*; do
+            for rule in "$REPO_DIR"/rules/toolkit-*; do
                 [ -f "$rule" ] && ln -s "$rule" "$USER_CLAUDE/rules/$(basename "$rule")"
             done
 
             echo "   ✓ Installed to ~/.claude/"
             echo ""
-            echo "   Restart Claude Code to see /llmc-* commands everywhere"
+            echo "   Restart Claude Code to see /toolkit-* commands everywhere"
         fi
 
         echo ""
@@ -438,23 +438,23 @@ case $CONTEXT in
         echo "      Edit commands/, skills/, agents/, rules/"
         echo ""
         echo "   3. Use sessions/ for handovers:"
-        echo "      /llmc-new-handover <description>"
+        echo "      /toolkit-new-handover <description>"
         ;;
 
-    "project-with-llmc")
+    "project-with-toolkit")
         echo "📋 Next Steps:"
         echo ""
         echo "   1. Start experimenting:"
-        echo "      /llmc-choose-artifact"
+        echo "      /toolkit-choose-artifact"
         echo "         ↓"
         echo "      Creates *.local.* files (git-ignored)"
         echo ""
         echo "   2. Test your experiments locally"
         echo ""
         echo "   3. When ready to share with team:"
-        echo "      /llmc-promote plans/my-feature.local.md"
+        echo "      /toolkit-promote plans/my-feature.local.md"
         echo "         ↓"
-        echo "      Opens PR to LLMC repo"
+        echo "      Opens PR to Toolkit repo"
         ;;
 
     "new-project")
@@ -463,17 +463,17 @@ case $CONTEXT in
             echo ""
             echo "   1. Commit the submodule:"
             echo "      git add .claude .gitmodules"
-            echo "      git commit -m 'Add LLMC configuration submodule'"
+            echo "      git commit -m 'Add Toolkit configuration submodule'"
             echo ""
-            echo "   2. Start using LLMC:"
-            echo "      /llmc-choose-artifact"
+            echo "   2. Start using Toolkit:"
+            echo "      /toolkit-choose-artifact"
         else
             echo "📋 Next Steps:"
             echo ""
-            echo "   1. To add LLMC later:"
+            echo "   1. To add Toolkit later:"
             echo "      git submodule add <url> .claude"
             echo ""
-            echo "   2. Or continue without LLMC:"
+            echo "   2. Or continue without Toolkit:"
             echo "      Use .claude/sessions/ and .claude/plans/ manually"
         fi
         ;;

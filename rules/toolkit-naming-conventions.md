@@ -1,6 +1,6 @@
-# LLMC Naming Conventions
+# Toolkit Naming Conventions
 
-When working with LLMC session workspace, follow these naming patterns:
+When working with Toolkit session workspace, follow these naming patterns:
 
 ## File Naming: Date-First Pattern
 
@@ -44,22 +44,22 @@ This ensures:
 Use lowercase with hyphens:
 
 ```
-✅ skills/llmc-handover/
-✅ commands/llmc-new-handover.md
+✅ skills/toolkit-handover/
+✅ commands/toolkit-new-handover.md
 
-❌ skills/LLMC/Handover/            # Uppercase
-❌ skills/llmc_handover/            # Underscores
+❌ skills/Toolkit/Handover/            # Uppercase
+❌ skills/toolkit_handover/            # Underscores
 ```
 
-## LLMC Namespace
+## Toolkit Namespace
 
-All LLMC meta-tools use `llmc` prefix or directory:
+All Toolkit meta-tools use `toolkit` prefix or directory:
 
 ```
-✅ rules/llmc-frontmatter-standards.md
-✅ commands/llmc-new-handover.md
-✅ skills/llmc-setup/SKILL.md
-✅ agents/llmc-architecture.md
+✅ rules/toolkit-frontmatter-standards.md
+✅ commands/toolkit-new-handover.md
+✅ skills/toolkit-setup/SKILL.md
+✅ agents/toolkit-architecture.md
 
 ❌ rules/frontmatter-standards.md       # No namespace
 ❌ commands/create-handover.md          # No namespace

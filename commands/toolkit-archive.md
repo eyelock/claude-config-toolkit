@@ -1,15 +1,15 @@
 # Archive Handovers
 
-**Command:** `/llmc-archive [--dry-run] [--days N]`
+**Command:** `/toolkit-archive [--dry-run] [--days N]`
 
 **Purpose:** Archive completed handover documents to date-organized folders.
 
 ## Usage
 
 ```
-/llmc-archive                  # Archive completed or >7 days old
-/llmc-archive --dry-run        # Preview what would be archived
-/llmc-archive --days 14        # Archive >14 days old
+/toolkit-archive                  # Archive completed or >7 days old
+/toolkit-archive --dry-run        # Preview what would be archived
+/toolkit-archive --days 14        # Archive >14 days old
 ```
 
 ## What It Does
@@ -116,5 +116,5 @@ sessions/
 
 ## See Also
 
-- `/llmc-new-handover` - Create new handover
-- `rules/llmc-session-continuity.md` - When to archive handovers
+- `/toolkit-new-handover` - Create new handover
+- `rules/toolkit-session-continuity.md` - When to archive handovers

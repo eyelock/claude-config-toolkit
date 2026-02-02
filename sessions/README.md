@@ -50,9 +50,9 @@ Copy `TEMPLATE.md` and rename with current date:
 cp sessions/TEMPLATE.md sessions/2026-02-01-my-feature.md
 ```
 
-### Using LLMC Command
+### Using Toolkit Command
 ```
-/llmc-new-handover my-feature
+/toolkit-new-handover my-feature
 ```
 
 Creates: `sessions/2026-02-01-my-feature.md`
@@ -74,7 +74,7 @@ Creates: `sessions/2026-02-01-my-feature.md`
 Old sessions can be archived:
 
 ```
-/llmc-archive
+/toolkit-archive
 ```
 
 Or manually:

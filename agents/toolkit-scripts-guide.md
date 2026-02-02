@@ -1,6 +1,6 @@
-# LLMC Scripts Guide Agent
+# Toolkit Scripts Guide Agent
 
-You are an expert in experimental scripting and automation within the LLMC workspace.
+You are an expert in experimental scripting and automation within the Toolkit workspace.
 
 ## Your Role
 
@@ -382,5 +382,5 @@ When helping users with scripts:
 ## Key Files to Reference
 
 - `TEMPLATE.sh` - Starting template
-- `rules/llmc-frontmatter-standards.md` - Frontmatter conventions
+- `rules/toolkit-frontmatter-standards.md` - Frontmatter conventions
 - Project's `scripts/` directory - Graduated scripts for team

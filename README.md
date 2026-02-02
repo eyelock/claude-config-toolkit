@@ -1,4 +1,4 @@
-# LLMC - LLM Configuration Management
+# Claude Config Toolkit
 
 > Note: This is a personal project developed in my spare time. It works well for my workflow but may have rough edges. Contributions and feedback welcome!  See the [Issues](https://github.com/eyelock/claude-config-toolkit/issues) for outstanding work in this early access release.
 
@@ -8,35 +8,35 @@ A proven approach to writing, sharing, and measuring the impact of AI developmen
 
 ## Quick Start
 
-**One command:** `/llmc-setup` - It detects your context and does the right thing.
+**One command:** `/toolkit-setup` - It detects your context and does the right thing.
 
-### Scenario 1: Team Member (Project with LLMC)
+### Scenario 1: Team Member (Project with the Toolkit)
 
 **Your project already has `.claude/` folder:**
 
 1. **Open Claude Code** in your project
 2. **Run setup:**
    ```
-   /llmc-setup    # Auto-detects project, creates .claude/sessions/ and .claude/plans/
+   /toolkit-setup    # Auto-detects project, creates .claude/sessions/ and .claude/plans/
    ```
 3. **Start experimenting:**
    ```
-   /llmc-choose-artifact    # Creates *.local.* files (git-ignored)
+   /toolkit-choose-artifact    # Creates *.local.* files (git-ignored)
    ```
 4. **Test locally, then promote:**
    ```
-   /llmc-promote plans/my-feature.local.md    # Shares with team
+   /toolkit-promote plans/my-feature.local.md    # Shares with team
    ```
 
-**No `.claude/` folder yet?** Run `/llmc-setup` - it will offer to add LLMC as submodule.
+**No `.claude/` folder yet?** Run `/toolkit-setup` - it will offer to add the Toolkit as submodule.
 
-### Scenario 2: LLMC Maintainer (Developing Configs)
+### Scenario 2: Claude Config Maintainer (Developing Configs)
 
 **Want to create or improve team configs?**
 
 1. **Clone this repo:**
    ```bash
-   git clone git@github.com:your-org/llmc-config.git ~/repos/myteam-claude-config
+   git clone git@github.com:your-org/toolkit-config.git ~/repos/myteam-claude-config
    cd ~/repos/myteam-claude-config
    ```
 
@@ -44,18 +44,18 @@ A proven approach to writing, sharing, and measuring the impact of AI developmen
    ```bash
    make install
    ```
-   This symlinks LLMC to `~/.claude/` so `/llmc-*` commands work.
+   This symlinks Toolkit to `~/.claude/` so `/toolkit-*` commands work.
 
 3. **Restart Claude Code** (or reload window)
 
 4. **Open Claude Code** and run setup:
    ```
-   /llmc-setup    # Creates sessions/plans/ workspace
+   /toolkit-setup    # Creates sessions/plans/ workspace
    ```
 
 5. **Start creating:**
    ```
-   /llmc-choose-artifact    # Guides you through artifact types
+   /toolkit-choose-artifact    # Guides you through artifact types
    ```
 
 6. **Test it, then submit a PR**
@@ -67,8 +67,8 @@ A proven approach to writing, sharing, and measuring the impact of AI developmen
 **Experiment safely:**
 - Create: `my-command.local.md` (git-ignored)
 - Test thoroughly
-- Promote: `/llmc-promote plans/my-command.local.md`
-- Result: `.claude/commands/llmc-my-command.md` (git-tracked)
+- Promote: `/toolkit-promote plans/my-command.local.md`
+- Result: `.claude/commands/toolkit-my-command.md` (git-tracked)
 
 **Path: Experiment → Test → Promote → Team**
 
@@ -92,7 +92,7 @@ Claude Code supports five artifact types. Each has different characteristics for
 - 🎯 **Tool availability**: Agents can be read-only (exploration) or read-write (task completion) → Tools shape behavior
 - 💬 **Interaction model**: Commands execute, Skills interact, Agents coach, Rules guide passively
 
-**Not sure which to use?** Invoke `/llmc-choose-artifact` for an interactive decision helper.
+**Not sure which to use?** Invoke `/toolkit-choose-artifact` for an interactive decision helper.
 
 ### 🎯 Three-Tier Development Model
 
@@ -147,24 +147,24 @@ Claude Code supports five artifact types. Each has different characteristics for
 - Cross-project utilities (e.g., `/explain-thoroughly`)
 - Individual productivity tools
 
-## LLMC Meta-Tools
+## Toolkit Meta-Tools
 
-The **llmc** namespace provides tools for managing Claude Code configurations:
+The **toolkit** namespace provides tools for managing Claude Code configurations:
 
 **Interactive Skills:**
-- `/llmc-choose-artifact` - Help choosing the right artifact type (command/skill/agent/rule/plan)
-- `/llmc-setup` - Initialize workspace structure
-- `/llmc-validate` - Validate frontmatter metadata
-- `/llmc-handover` - Create and manage session handovers
+- `/toolkit-choose-artifact` - Help choosing the right artifact type (command/skill/agent/rule/plan)
+- `/toolkit-setup` - Initialize workspace structure
+- `/toolkit-validate` - Validate frontmatter metadata
+- `/toolkit-handover` - Create and manage session handovers
 
 **Quick Commands:**
-- `/llmc-new-handover` - Create session handover document
-- `/llmc-graduate` - Graduate working plan to formal plan
-- `/llmc-archive` - Archive completed handovers
+- `/toolkit-new-handover` - Create session handover document
+- `/toolkit-graduate` - Graduate working plan to formal plan
+- `/toolkit-archive` - Archive completed handovers
 
 **Standards & Guides:**
-- `rules/llmc-` - Naming conventions, frontmatter standards, workspace separation
-- `agents/llmc-` - Expert guidance on workflows, planning, architecture, contributing
+- `rules/toolkit-` - Naming conventions, frontmatter standards, workspace separation
+- `agents/toolkit-` - Expert guidance on workflows, planning, architecture, contributing
 
 ## Browsing Documentation
 
@@ -185,18 +185,18 @@ make validate  # Check frontmatter
 
 ## Directory Structure
 
-### This Config Repo (llmc-config/)
+### This Config Repo (toolkit-config/)
 
 ```
-llmc-config/           # The config repository
+toolkit-config/           # The config repository
 ├── README.md                   # This file
 ├── Makefile                    # Development tasks
 ├── index.html                  # Docsify documentation browser
 │
-├── commands/llmc-              # LLMC commands (git-tracked)
-├── skills/llmc/                # LLMC skills (git-tracked)
-├── agents/llmc-                # LLMC agents (git-tracked)
-├── rules/llmc-                 # LLMC rules (git-tracked)
+├── commands/toolkit-              # Toolkit commands (git-tracked)
+├── skills/toolkit/                # Toolkit skills (git-tracked)
+├── agents/toolkit-                # Toolkit agents (git-tracked)
+├── rules/toolkit-                 # Toolkit rules (git-tracked)
 │
 ├── plans/                      # Working plans (git-ignored content)
 │   ├── README.md               # How to use plans/
@@ -216,10 +216,10 @@ When this config is linked to a project via git submodule:
 ```
 your-project/                      # Your actual project
 ├── .claude/                    # Git submodule → myteam-claude-config
-│   ├── commands/llmc-          # Team commands (from submodule)
-│   ├── skills/llmc/            # Team skills (from submodule)
-│   ├── agents/llmc-            # Team agents (from submodule)
-│   └── rules/llmc-             # Team rules (from submodule)
+│   ├── commands/toolkit-          # Team commands (from submodule)
+│   ├── skills/toolkit/            # Team skills (from submodule)
+│   ├── agents/toolkit-            # Team agents (from submodule)
+│   └── rules/toolkit-             # Team rules (from submodule)
 │
 ├── plans/                      # Working plans (git-ignored)
 │   └── *.md                    # Your project planning docs
@@ -229,8 +229,8 @@ your-project/                      # Your actual project
 ```
 
 **Key insight:** `sessions/` and `plans/` exist in BOTH repos, but serve different purposes:
-- **In config repo:** Workspace for developing LLMC configs
-- **In project repo:** Workspace for using LLMC configs to build your project
+- **In config repo:** Workspace for developing Toolkit configs
+- **In project repo:** Workspace for using Toolkit configs to build your project
 
 ## Git-Ignore Philosophy
 
@@ -253,19 +253,19 @@ sessions/*.md
 ```
 
 **Why this matters:**
-1. **Config repo:** When developing LLMC, you need workspace for drafts and session continuity
-2. **Project repo:** When using LLMC, you need workspace for planning features and resuming work
+1. **Config repo:** When developing Toolkit, you need workspace for drafts and session continuity
+2. **Project repo:** When using Toolkit, you need workspace for planning features and resuming work
 3. **Both cases:** The directories must exist, but your personal content stays private
 
-## Using Without LLMC
+## Using Without Toolkit
 
-**Can you use this workspace pattern without the LLMC starter configs?**
+**Can you use this workspace pattern without the Toolkit starter configs?**
 
 **Yes!** The core concept is separating workspace (sessions/plans) from configs (commands/skills/agents/rules).
 
-### Two Patterns Without LLMC
+### Two Patterns Without Toolkit
 
-**Pattern 1: Root-level workspace** (mimics LLMC maintainer structure)
+**Pattern 1: Root-level workspace** (mimics Toolkit maintainer structure)
 ```bash
 your-project/
 ├── sessions/          # Session handovers
@@ -302,14 +302,14 @@ echo ".claude/plans/*.md" >> .gitignore
 ```
 
 **Which pattern to use?**
-- Pattern 1 if you're developing configs themselves (like LLMC maintainers)
-- Pattern 2 if you're using configs in a project (like LLMC submodule users)
+- Pattern 1 if you're developing configs themselves (like Toolkit maintainers)
+- Pattern 2 if you're using configs in a project (like Toolkit submodule users)
 
-**What you lose without LLMC:**
-- `/llmc-setup` - manual directory creation instead
-- `/llmc-new-handover` - manual file creation instead
-- `/llmc-graduate` - manual rename and git commit instead
-- `/llmc-validate` - no frontmatter validation
+**What you lose without Toolkit:**
+- `/toolkit-setup` - manual directory creation instead
+- `/toolkit-new-handover` - manual file creation instead
+- `/toolkit-graduate` - manual rename and git commit instead
+- `/toolkit-validate` - no frontmatter validation
 - No starter agents/skills/rules/commands
 
 **What you keep:**
@@ -318,7 +318,7 @@ echo ".claude/plans/*.md" >> .gitignore
 - The three-tier development model
 - Git-based distribution
 
-LLMC provides automation and starters, but the core pattern is just directories and git.
+Toolkit provides automation and starters, but the core pattern is just directories and git.
 
 ## Getting Started
 
@@ -326,21 +326,21 @@ LLMC provides automation and starters, but the core pattern is just directories 
 
 **Want to understand the system?**
 1. Run `make serve` to browse documentation
-2. Read `agents/llmc-architecture.md` - System overview
-3. Try `/llmc-choose-artifact` - Interactive guide
+2. Read `agents/toolkit-architecture.md` - System overview
+3. Try `/toolkit-choose-artifact` - Interactive guide
 4. Explore the artifact types in `commands/`, `skills/`, `agents/`, `rules/`
 
 ### Path 2: Setting Up a Project
 
-**Want to add LLMC to a project? (Tech leads / project maintainers)**
+**Want to add Toolkit to a project? (Tech leads / project maintainers)**
 
-**Option A - With LLMC automation:**
+**Option A - With Toolkit automation:**
 
-1. **Add LLMC as a submodule:**
+1. **Add Toolkit as a submodule:**
    ```bash
    cd /path/to/your/project
-   git submodule add git@github.com:your-org/llmc-config.git .claude
-   git commit -m "Add LLMC configuration submodule"
+   git submodule add git@github.com:your-org/toolkit-config.git .claude
+   git commit -m "Add Toolkit configuration submodule"
    ```
 
 2. **Open Claude Code in your project:**
@@ -350,17 +350,17 @@ LLMC provides automation and starters, but the core pattern is just directories 
 
 3. **In Claude, run setup:**
    ```
-   /llmc-setup    # Creates sessions/ and plans/ directories
+   /toolkit-setup    # Creates sessions/ and plans/ directories
    ```
 
 4. **Done! Now you and your team can use:**
    ```
-   /llmc-new-handover my-feature
-   /llmc-choose-artifact
-   /llmc-validate
+   /toolkit-new-handover my-feature
+   /toolkit-choose-artifact
+   /toolkit-validate
    ```
 
-**Option B - Manual (no LLMC starters):**
+**Option B - Manual (no Toolkit starters):**
 
 1. **Create workspace manually:**
    ```bash
@@ -368,16 +368,16 @@ LLMC provides automation and starters, but the core pattern is just directories 
    echo -e "sessions/*.md\nplans/*.md" >> .gitignore
    ```
 
-2. **Create your own configs in `.claude/`** (no LLMC commands/skills/agents)
+2. **Create your own configs in `.claude/`** (no Toolkit commands/skills/agents)
 
-### Path 3: Contributing to LLMC
+### Path 3: Contributing to Toolkit
 
 **Want to develop configs for the team?**
 
-1. **Clone the LLMC repo:**
+1. **Clone the Toolkit repo:**
    ```bash
-   git clone git@github.com:your-org/llmc-config.git ~/repos/llmc
-   cd ~/repos/llmc
+   git clone git@github.com:your-org/claude-config-toolkit.git ~/repos/toolkit
+   cd ~/repos/toolkit
    ```
 
 2. **Open in Claude Code:**
@@ -387,12 +387,12 @@ LLMC provides automation and starters, but the core pattern is just directories 
 
 3. **In Claude, initialize workspace:**
    ```
-   /llmc-setup    # Creates sessions/ and plans/ directories
+   /toolkit-setup    # Creates sessions/ and plans/ directories
    ```
 
 4. **Create your first config:**
    ```
-   /llmc-choose-artifact    # Interactive guide walks you through it
+   /toolkit-choose-artifact    # Interactive guide walks you through it
    ```
    This will help you choose: Command, Skill, Agent, or Rule
 
@@ -405,24 +405,24 @@ LLMC provides automation and starters, but the core pattern is just directories 
 ## Contributing
 
 **Quick start:**
-1. Run `/llmc-setup` to initialize your workspace
-2. Run `/llmc-choose-artifact` to choose the right artifact type
+1. Run `/toolkit-setup` to initialize your workspace
+2. Run `/toolkit-choose-artifact` to choose the right artifact type
 3. Create your artifact in the appropriate directory
 4. Test it, then submit a PR
 
 **Detailed guides:**
-- `agents/llmc-contributing.md` - **Comprehensive contribution guide** (workflow, quality standards, examples)
-- `agents/llmc-workflows.md` - Development workflows (session, planning)
-- `agents/llmc-organization.md` - File organization patterns
-- `agents/llmc-team-workflows.md` - Team workflows (PR testing, releases, upgrades)
+- `agents/toolkit-contributing.md` - **Comprehensive contribution guide** (workflow, quality standards, examples)
+- `agents/toolkit-workflows.md` - Development workflows (session, planning)
+- `agents/toolkit-organization.md` - File organization patterns
+- `agents/toolkit-team-workflows.md` - Team workflows (PR testing, releases, upgrades)
 
 **Standards:**
-- `rules/llmc-naming-conventions.md` - File naming standards
-- `rules/llmc-frontmatter-standards.md` - Metadata conventions
-- `rules/llmc-workspace-separation.md` - Workshop vs product philosophy
+- `rules/toolkit-naming-conventions.md` - File naming standards
+- `rules/toolkit-frontmatter-standards.md` - Metadata conventions
+- `rules/toolkit-workspace-separation.md` - Workshop vs product philosophy
 
 ## Support
 
 - **Questions?** Run `make serve` to browse all documentation
 - **Issues?** Open a GitHub issue
-- **Stuck?** Use the LLMC skills and agents - they're designed to help!
+- **Stuck?** Use the Toolkit skills and agents - they're designed to help!

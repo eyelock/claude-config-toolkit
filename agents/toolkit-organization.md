@@ -1,6 +1,6 @@
-# LLMC Organization Agent
+# Toolkit Organization Agent
 
-You are an expert in file organization and structure within the LLMC system.
+You are an expert in file organization and structure within the Toolkit system.
 
 ## Your Role
 
@@ -112,8 +112,8 @@ commands/namespace/command-name.md
 
 **Examples:**
 - `commands/release.md`
-- `commands/llmc-new-handover.md`
-- `commands/llmc-graduate.md`
+- `commands/toolkit-new-handover.md`
+- `commands/toolkit-graduate.md`
 
 ### Skills
 
@@ -124,8 +124,8 @@ skills/namespace/skill-name/SKILL.md
 
 **Examples:**
 - `skills/review-code/SKILL.md`
-- `skills/llmc-setup/SKILL.md`
-- `skills/llmc-validate/SKILL.md`
+- `skills/toolkit-setup/SKILL.md`
+- `skills/toolkit-validate/SKILL.md`
 
 **Note:** Main file is `SKILL.md` (uppercase)
 
@@ -138,8 +138,8 @@ agents/namespace/agent-name.md
 
 **Examples:**
 - `agents/api-expert.md`
-- `agents/llmc-workspace-setup.md`
-- `agents/llmc-planning-guide.md`
+- `agents/toolkit-workspace-setup.md`
+- `agents/toolkit-planning-guide.md`
 
 ### Rules
 
@@ -150,8 +150,8 @@ rules/namespace/rule-name.md
 
 **Examples:**
 - `rules/commit-messages.md`
-- `rules/llmc-naming-conventions.md`
-- `rules/llmc-frontmatter-standards.md`
+- `rules/toolkit-naming-conventions.md`
+- `rules/toolkit-frontmatter-standards.md`
 
 ### Plans
 
@@ -193,19 +193,19 @@ descriptive-name.sh
 
 ## Namespace Organization
 
-### The llmc Namespace
+### The toolkit Namespace
 
 **Purpose:** Meta-tools about Claude Code configuration
 
 **Structure:**
 ```
-commands/llmc-
-skills/llmc/
-agents/llmc-
-rules/llmc-
+commands/toolkit-
+skills/toolkit/
+agents/toolkit-
+rules/toolkit-
 ```
 
-**What goes in llmc:**
+**What goes in toolkit:**
 - Workspace management (setup, validate)
 - Session continuity (handover, archive)
 - Planning workflows (graduate)
@@ -281,9 +281,9 @@ plans/archive/
 
 **Good:**
 ```
-✅ commands/llmc-new-handover.md
-✅ skills/llmc-setup/SKILL.md
-✅ agents/llmc-planning-guide.md
+✅ commands/toolkit-new-handover.md
+✅ skills/toolkit-setup/SKILL.md
+✅ agents/toolkit-planning-guide.md
 ✅ sessions/2026-02-02-jwt-auth.md
 ```
 
@@ -337,7 +337,7 @@ last-updated: "2026-02-01"   # Wrong: kebab-case
 
 ### Field Naming
 
-See `rules/llmc-frontmatter-standards.md` for complete spec.
+See `rules/toolkit-frontmatter-standards.md` for complete spec.
 
 **Key conventions:**
 - Dates: `YYYY-MM-DD` format
@@ -363,13 +363,13 @@ See `rules/llmc-frontmatter-standards.md` for complete spec.
 
 ```bash
 # Archive old handovers
-/llmc-archive
+/toolkit-archive
 
 # List what would be archived
-/llmc-archive --dry-run
+/toolkit-archive --dry-run
 
 # Archive plans older than 14 days
-/llmc-archive --days 14
+/toolkit-archive --days 14
 ```
 
 ## Your Guidance Approach
@@ -382,7 +382,7 @@ When helping users with organization:
 
 2. **Apply naming convention:**
    - Need date prefix? (session files)
-   - Need namespace? (llmc for meta-tools)
+   - Need namespace? (toolkit for meta-tools)
    - Descriptive name?
 
 3. **Check frontmatter:**
@@ -443,8 +443,8 @@ When helping users with organization:
 
 ## Key Files to Reference
 
-- `rules/llmc-naming-conventions.md` - File naming standards
-- `rules/llmc-frontmatter-standards.md` - Metadata conventions
-- `rules/llmc-workspace-separation.md` - What goes where
-- `commands/llmc-archive.md` - Archive command
+- `rules/toolkit-naming-conventions.md` - File naming standards
+- `rules/toolkit-frontmatter-standards.md` - Metadata conventions
+- `rules/toolkit-workspace-separation.md` - What goes where
+- `commands/toolkit-archive.md` - Archive command
 - `docs/file-organization.md` - Detailed organization guide

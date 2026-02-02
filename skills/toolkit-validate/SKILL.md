@@ -1,9 +1,9 @@
 ---
-name: llmc-validate
-description: Validate frontmatter metadata in handovers, plans, and scripts following LLMC standards. Performs frictionless validation with hard stops for critical issues and suggestions for optional improvements.
+name: toolkit-validate
+description: Validate frontmatter metadata in handovers, plans, and scripts following Toolkit standards. Performs frictionless validation with hard stops for critical issues and suggestions for optional improvements.
 ---
 
-# LLMC Validation
+# Toolkit Validation
 
 Validate frontmatter metadata across workspace files.
 
@@ -40,19 +40,19 @@ Validates:
 - Before graduating plans
 - During code reviews
 - As part of CI/CD checks
-- When teaching LLMC conventions
+- When teaching Toolkit conventions
 
 ## Usage
 
 ```bash
 # Validate all workspace files
-/llmc-validate
+/toolkit-validate
 
 # Validate specific file
-/llmc-validate sessions/2026-02-01-feature.md
+/toolkit-validate sessions/2026-02-01-feature.md
 
 # Dry run (show what would be checked)
-/llmc-validate --dry-run
+/toolkit-validate --dry-run
 ```
 
 ## What Gets Checked
@@ -110,7 +110,7 @@ The validator:
 ## Example Output
 
 ```
-🔍 Validating LLMC workspace files...
+🔍 Validating Toolkit workspace files...
 
 ✓ sessions/2026-02-01-feature.md
   All required fields present
@@ -130,6 +130,6 @@ Summary: 2 valid, 1 error, 1 suggestion
 
 ## See Also
 
-- `rules/llmc-frontmatter-standards.md` - Field naming conventions
-- `rules/llmc-naming-conventions.md` - File naming standards
-- `commands/llmc-archive.md` - Archive command (validates before archiving)
+- `rules/toolkit-frontmatter-standards.md` - Field naming conventions
+- `rules/toolkit-naming-conventions.md` - File naming standards
+- `commands/toolkit-archive.md` - Archive command (validates before archiving)

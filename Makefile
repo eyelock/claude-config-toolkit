@@ -2,10 +2,10 @@
 
 # Default target
 help:
-	@echo "LLMC Claude Code Configuration - Available Targets"
+	@echo "Claude Config Toolkit - Available Targets"
 	@echo ""
 	@echo "Setup:"
-	@echo "  make install    - Install LLMC to ~/.claude/ for development (symlinks)"
+	@echo "  make install    - Install Toolkit to ~/.claude/ for development (symlinks)"
 	@echo ""
 	@echo "Development:"
 	@echo "  make validate   - Validate frontmatter in all session and plan files"
@@ -25,15 +25,15 @@ help:
 	@echo "  make serve          (browse docs at http://localhost:3000)"
 
 install:
-	@echo "🛠️  LLMC Developer Install"
+	@echo "🛠️  Toolkit Developer Install"
 	@echo ""
-	@echo "This creates symlinks to ~/.claude/ so /llmc-* commands work everywhere."
+	@echo "This creates symlinks to ~/.claude/ so /toolkit-* commands work everywhere."
 	@echo ""
 	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 	@echo "Checking existing configuration at ~/.claude/..."
 	@echo ""
 	@FOUND_ISSUES=0; \
-	for artifact in commands/llmc-*.md skills/llmc-* agents/llmc-*.md rules/llmc-*.md; do \
+	for artifact in commands/toolkit-*.md skills/toolkit-* agents/toolkit-*.md rules/toolkit-*.md; do \
 		if [ ! -e "$$artifact" ]; then continue; fi; \
 		BASENAME=$$(basename "$$artifact" .md); \
 		TYPE=$$(echo "$$artifact" | cut -d/ -f1); \
@@ -68,33 +68,33 @@ install:
 	@echo "🛠️  Installing to user level..."
 	@mkdir -p ~/.claude/skills ~/.claude/commands ~/.claude/agents ~/.claude/rules
 	@# Remove old namespace symlinks if they exist
-	@[ -L ~/.claude/skills/llmc ] && rm ~/.claude/skills/llmc || true
-	@[ -L ~/.claude/commands/llmc ] && rm ~/.claude/commands/llmc || true
-	@[ -L ~/.claude/agents/llmc ] && rm ~/.claude/agents/llmc || true
-	@[ -L ~/.claude/rules/llmc ] && rm ~/.claude/rules/llmc || true
+	@[ -L ~/.claude/skills/toolkit ] && rm ~/.claude/skills/toolkit || true
+	@[ -L ~/.claude/commands/toolkit ] && rm ~/.claude/commands/toolkit || true
+	@[ -L ~/.claude/agents/toolkit ] && rm ~/.claude/agents/toolkit || true
+	@[ -L ~/.claude/rules/toolkit ] && rm ~/.claude/rules/toolkit || true
 	@# Create individual symlinks for each artifact
-	@for cmd in commands/llmc-*.md; do \
+	@for cmd in commands/toolkit-*.md; do \
 		[ -f "$$cmd" ] || continue; \
 		name=$$(basename "$$cmd"); \
 		[ -L ~/.claude/commands/$$name ] && rm ~/.claude/commands/$$name || true; \
 		ln -s "$(CURDIR)/$$cmd" ~/.claude/commands/$$name; \
 		echo "  ✓ Linked commands/$$name"; \
 	done
-	@for skill in skills/llmc-*/; do \
+	@for skill in skills/toolkit-*/; do \
 		[ -d "$$skill" ] || continue; \
 		name=$$(basename "$$skill"); \
 		[ -L ~/.claude/skills/$$name ] && rm ~/.claude/skills/$$name || true; \
 		ln -s "$(CURDIR)/$$skill" ~/.claude/skills/$$name; \
 		echo "  ✓ Linked skills/$$name"; \
 	done
-	@for agent in agents/llmc-*.md; do \
+	@for agent in agents/toolkit-*.md; do \
 		[ -f "$$agent" ] || continue; \
 		name=$$(basename "$$agent"); \
 		[ -L ~/.claude/agents/$$name ] && rm ~/.claude/agents/$$name || true; \
 		ln -s "$(CURDIR)/$$agent" ~/.claude/agents/$$name; \
 		echo "  ✓ Linked agents/$$name"; \
 	done
-	@for rule in rules/llmc-*.md; do \
+	@for rule in rules/toolkit-*.md; do \
 		[ -f "$$rule" ] || continue; \
 		name=$$(basename "$$rule"); \
 		[ -L ~/.claude/rules/$$name ] && rm ~/.claude/rules/$$name || true; \
@@ -104,14 +104,14 @@ install:
 	@echo ""
 	@echo "✅ Installed to ~/.claude/"
 	@echo ""
-	@echo "Restart Claude Code to see /llmc-* commands and skills"
+	@echo "Restart Claude Code to see /toolkit-* commands and skills"
 
 validate:
 	@echo "Validating frontmatter in session and plan files..."
-	@if [ -f skills/llmc/validate/validate-frontmatter.sh ]; then \
-		bash skills/llmc/validate/validate-frontmatter.sh; \
+	@if [ -f skills/toolkit/validate/validate-frontmatter.sh ]; then \
+		bash skills/toolkit/validate/validate-frontmatter.sh; \
 	else \
-		echo "⚠️  Validation script not found at skills/llmc/validate/validate-frontmatter.sh"; \
+		echo "⚠️  Validation script not found at skills/toolkit/validate/validate-frontmatter.sh"; \
 		echo "Checking for required frontmatter fields manually..."; \
 		for file in sessions/*.md plans/*.md; do \
 			if [ -f "$$file" ] && [ "$$(basename $$file)" != "README.md" ] && [ "$$(basename $$file)" != "TEMPLATE.md" ]; then \
@@ -128,9 +128,9 @@ validate:
 clean:
 	@echo "Cleaning up workspace..."
 	@echo "Archiving old session files (>7 days old)..."
-	@if [ -f commands/llmc/archive.md ]; then \
-		echo "Running /llmc/archive..."; \
-		echo "⚠️  Manual cleanup needed - run '/llmc/archive' in Claude Code"; \
+	@if [ -f commands/toolkit/archive.md ]; then \
+		echo "Running /toolkit/archive..."; \
+		echo "⚠️  Manual cleanup needed - run '/toolkit/archive' in Claude Code"; \
 	else \
 		echo "Moving old session files to archive..."; \
 		mkdir -p sessions/archive/$$(date +%Y-%m); \
@@ -143,11 +143,11 @@ clean:
 test: validate
 	@echo "Running all checks..."
 	@echo ""
-	@echo "1. Checking LLMC artifacts (optional)..."
-	@test -d commands/llmc && echo "  ✅ commands/llmc exists" || echo "  ℹ️  commands/llmc not present (optional)"
-	@test -d skills/llmc && echo "  ✅ skills/llmc exists" || echo "  ℹ️  skills/llmc not present (optional)"
-	@test -d agents/llmc && echo "  ✅ agents/llmc exists" || echo "  ℹ️  agents/llmc not present (optional)"
-	@test -d rules/llmc && echo "  ✅ rules/llmc exists" || echo "  ℹ️  rules/llmc not present (optional)"
+	@echo "1. Checking Toolkit artifacts (optional)..."
+	@test -d commands/toolkit && echo "  ✅ commands/toolkit exists" || echo "  ℹ️  commands/toolkit not present (optional)"
+	@test -d skills/toolkit && echo "  ✅ skills/toolkit exists" || echo "  ℹ️  skills/toolkit not present (optional)"
+	@test -d agents/toolkit && echo "  ✅ agents/toolkit exists" || echo "  ℹ️  agents/toolkit not present (optional)"
+	@test -d rules/toolkit && echo "  ✅ rules/toolkit exists" || echo "  ℹ️  rules/toolkit not present (optional)"
 	@echo ""
 	@echo "2. Checking workspace structure (required)..."
 	@test -d sessions && echo "  ✅ sessions exists" || echo "  ❌ sessions missing"

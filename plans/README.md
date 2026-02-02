@@ -67,9 +67,9 @@ Status: `decided`
 ### 3. Graduation Phase
 When ready to share with team:
 
-**Option A - Using LLMC:**
+**Option A - Using Toolkit:**
 ```
-/llmc-graduate 2026-02-01-auth-strategy
+/toolkit-graduate 2026-02-01-auth-strategy
 ```
 
 **Option B - Manual:**
@@ -90,7 +90,7 @@ Now the plan is in `plans/` (git-tracked), the team can:
 - Reference it in commits
 - Update it as implementation evolves
 
-**Note:** In projects using LLMC as a submodule, committed plans appear as `.claude/plans/` (since the entire repo becomes `.claude/`).
+**Note:** In projects using Toolkit as a submodule, committed plans appear as `.claude/plans/` (since the entire repo becomes `.claude/`).
 
 ## What This Is NOT
 

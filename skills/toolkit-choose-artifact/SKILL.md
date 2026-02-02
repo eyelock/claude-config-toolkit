@@ -1,5 +1,5 @@
 ---
-name: llmc-choose-artifact
+name: toolkit-choose-artifact
 description: Interactive guide to help you choose the right Claude Code artifact type (command, skill, agent, rule, or plan) based on your needs. Asks targeted questions about purpose, interaction model, tool requirements, and context persistence to recommend the best fit.
 ---
 
@@ -71,7 +71,7 @@ You said you want to **execute an operation**.
 **A. No - just run and show output**
 → ✅ Use **Command**
 - Bash script executes, user sees results
-- Examples: `/llmc-new-handover`, `/llmc-archive`, `/release`
+- Examples: `/toolkit-new-handover`, `/toolkit-archive`, `/release`
 
 **B. Yes - ask questions, get input, guide through steps**
 → ❌ Not a command → Use **Skill** instead
@@ -95,7 +95,7 @@ You said you want to **guide user through interactive workflow**.
 → ✅ Definitely use **Skill**
 - Progressive disclosure keeps context fresh
 - Not subject to dilution
-- Example: `/llmc-handover` invoked whenever creating handover
+- Example: `/toolkit-handover` invoked whenever creating handover
 
 **B. No - more of ongoing coaching throughout conversation**
 → 🤔 Consider **Agent** instead
@@ -108,7 +108,7 @@ You said you want to **guide user through interactive workflow**.
 **A. Execute operations (create files, run commands)**
 → ✅ Use **Skill** (can include scripts as assets)
 - Skills can bundle executable code
-- Examples: `/llmc-setup` creates directories
+- Examples: `/toolkit-setup` creates directories
 
 **B. Just guide with instructions**
 → ✅ Still use **Skill** if invoked on-demand
@@ -182,8 +182,8 @@ You said you want to **provide expert knowledge/coaching**.
 - ✅ Data processing
 
 **Examples:**
-- `/llmc-new-handover` - Create handover file
-- `/llmc-archive` - Archive old handovers
+- `/toolkit-new-handover` - Create handover file
+- `/toolkit-archive` - Archive old handovers
 - `/release` - Create release
 
 **When NOT to use:**
@@ -226,9 +226,9 @@ You said you want to **provide expert knowledge/coaching**.
 - ✅ Guided workflows
 
 **Examples:**
-- `/llmc-setup` - Initialize workspace
-- `/llmc-handover` - Create handover interactively
-- `/llmc-choose-artifact` - This skill!
+- `/toolkit-setup` - Initialize workspace
+- `/toolkit-handover` - Create handover interactively
+- `/toolkit-choose-artifact` - This skill!
 
 **When NOT to use:**
 - ❌ Simple bash execution → Use Command
@@ -271,8 +271,8 @@ You said you want to **provide expert knowledge/coaching**.
 - ✅ Session-start guidance
 
 **Examples:**
-- `agents/llmc-workspace-setup.md` - Workspace expertise
-- `agents/llmc-planning-guide.md` - Planning coaching
+- `agents/toolkit-workspace-setup.md` - Workspace expertise
+- `agents/toolkit-planning-guide.md` - Planning coaching
 - `agents/api-expert.md` - API design guidance
 
 **When NOT to use:**
@@ -320,9 +320,9 @@ You said you want to **provide expert knowledge/coaching**.
 - ✅ Quick reference material
 
 **Examples:**
-- `rules/llmc-naming-conventions.md`
-- `rules/llmc-frontmatter-standards.md`
-- `rules/llmc-session-continuity.md`
+- `rules/toolkit-naming-conventions.md`
+- `rules/toolkit-frontmatter-standards.md`
+- `rules/toolkit-session-continuity.md`
 
 **When NOT to use:**
 - ❌ Complex decision trees → Use Skill
@@ -375,11 +375,11 @@ You said you want to **provide expert knowledge/coaching**.
 ### "I want to automate creating handover documents"
 
 **Options:**
-1. **Command** - `/llmc-new-handover <description>`
+1. **Command** - `/toolkit-new-handover <description>`
    - ✅ Quick, non-interactive
    - Creates file, fills template
 
-2. **Skill** - `/llmc-handover create <description>`
+2. **Skill** - `/toolkit-handover create <description>`
    - ✅ Interactive, asks questions
    - Guides user through capturing context
 
@@ -392,15 +392,15 @@ You said you want to **provide expert knowledge/coaching**.
 ### "I want to help users understand workspace structure"
 
 **Options:**
-1. **Agent** - `agents/llmc-workspace-setup.md`
+1. **Agent** - `agents/toolkit-workspace-setup.md`
    - Provides ongoing coaching
    - ⚠️ Dilutes over time
 
-2. **Skill** - `/llmc-workspace-help`
+2. **Skill** - `/toolkit-workspace-help`
    - On-demand guidance
    - ✅ Fresh context each time
 
-3. **Rule** - `rules/llmc-workspace-separation.md`
+3. **Rule** - `rules/toolkit-workspace-separation.md`
    - Quick reference
    - ⚠️ Passive, dilutes over time
 
@@ -414,15 +414,15 @@ You said you want to **provide expert knowledge/coaching**.
 ### "I want to enforce naming conventions"
 
 **Options:**
-1. **Rule** - `rules/llmc-naming-conventions.md`
+1. **Rule** - `rules/toolkit-naming-conventions.md`
    - ✅ Always loaded
    - Passive influence
 
-2. **Command** - `/llmc/validate-names`
+2. **Command** - `/toolkit/validate-names`
    - Active checking
    - Explicit execution
 
-3. **Skill** - `/llmc-validate`
+3. **Skill** - `/toolkit-validate`
    - Interactive validation
    - Guided fixes
 
@@ -554,12 +554,12 @@ You said you want to **provide expert knowledge/coaching**.
 
 3. **Promote when ready:**
    ```
-   /llmc-promote plans/auth-helper.local.md
+   /toolkit-promote plans/auth-helper.local.md
    ```
 
 4. **Result:**
    ```
-   .claude/commands/llmc-auth-helper.md
+   .claude/commands/toolkit-auth-helper.md
    ```
 
 5. **Open PR** to share with team
@@ -579,10 +579,10 @@ You said you want to **provide expert knowledge/coaching**.
 - Promote to appropriate artifact directory
 
 **After promotion:**
-- Moves to `.claude/commands/llmc-`
-- Or `.claude/skills/llmc/`
-- Or `.claude/agents/llmc-`
-- Or `.claude/rules/llmc-`
+- Moves to `.claude/commands/toolkit-<name>.md` (for commands)
+- Or `.claude/skills/toolkit-<name>/` (for skills - directory)
+- Or `.claude/agents/toolkit-<name>.md` (for agents)
+- Or `.claude/rules/toolkit-<name>.md` (for rules)
 
 **Sessions never get promoted:**
 - Sessions are short-term (days)
@@ -598,7 +598,7 @@ You said you want to **provide expert knowledge/coaching**.
 ✅ **A Skill** - Not an agent, not a rule!
 
 **Why?**
-- 📋 Invoked on-demand (`/llmc-choose-artifact`)
+- 📋 Invoked on-demand (`/toolkit-choose-artifact`)
 - 🔄 Progressive disclosure (name+description at startup, full content now)
 - 🎯 Interactive decision tree
 - ✨ Fresh context each invocation
