@@ -1,3 +1,9 @@
+---
+name: toolkit-new-handover
+description: Create a new session handover document with today's date and proper frontmatter.
+argument-hint: <description>
+---
+
 # Create New Handover
 
 **Command:** `/toolkit-new-handover <description>`

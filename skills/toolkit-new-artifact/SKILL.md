@@ -23,11 +23,11 @@ The skill will prompt you for:
 
 **Currently implemented:**
 - ✅ **Agents** - Full support with tool selection
+- ✅ **Commands** - Bash executors
 
-**Coming soon:**
-- ⏳ **Commands** - Bash executors
-- ⏳ **Skills** - Interactive workflows
-- ⏳ **Rules** - Standards/conventions (modular alternative to CLAUDE.md)
+**Not automated:**
+- ❌ **Skills** - Skills need a multi-file directory (`SKILL.md` + `scripts/` + `templates/`), which doesn't fit a single-file scaffold. Copy an existing skill as your starting point instead — `skills/toolkit-new-plan/` for a simple, single-script skill, or `skills/toolkit-handover/` for a skill with multiple bundled scripts.
+- ❌ **Rules** - The Rule artifact type has other in-flight work on this repo; check for that before adding new `rules/` content by hand.
 
 ## What It Does (Agents)
 
@@ -46,6 +46,10 @@ The skill will prompt you for:
    - **Coordinator:** `Read, Grep, Glob, Bash, Skill` (workflow guide + git ops)
    - **Write-capable:** `Read, Write, Bash, Grep, Glob, Skill` (hands-on helper)
 
+## What It Does (Commands & Rules)
+
+Prompts for **name** and **description**, then creates a stub file with proper frontmatter (commands) or a standard heading structure (rules), ready for you to fill in the implementation/content. See `templates/command-template.md` and `templates/rule-template.md` for the exact shape.
+
 ## After Creation
 
 1. **Edit the agent** - Add domain expertise and guidance
@@ -59,7 +63,7 @@ The skill will prompt you for:
 - `/toolkit-validate` - Validate frontmatter
 - `rules/toolkit-agents.md` - Agent standards and patterns
 - `rules/toolkit-frontmatter-standards.md` - Metadata standards
-- `agents/toolkit-contributing` - Contribution workflow guidance
+- `agents/toolkit-workflows` - Contribution workflow guidance
 
 ## Implementation
 
@@ -70,4 +74,4 @@ This skill runs `scripts/new-artifact.sh` which:
 - Validates naming conventions
 - Provides next steps
 
-**Status:** Agent creation implemented, other types coming soon!
+**Status:** Agent and Command creation implemented. Skill and Rule scaffolding are manual (see "Not automated" above).

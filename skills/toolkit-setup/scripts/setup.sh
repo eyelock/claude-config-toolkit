@@ -97,42 +97,52 @@ case $CONTEXT in
         SESSIONS_DIR=".claude/sessions"
         PLANS_DIR=".claude/plans"
 
-        echo "No Toolkit found. You can:"
-        echo "  1. Add Toolkit as git submodule (recommended)"
-        echo "  2. Just create workspace structure"
-        echo ""
-
-        # Check if running interactively
-        if [ -t 0 ]; then
-            read -p "Add Toolkit submodule? (y/n): " add_submodule
-
-            if [ "$add_submodule" = "y" ]; then
-                read -p "Enter Toolkit repo URL (e.g., git@github.com:your-org/toolkit-config.git): " repo_url
-                if [ -n "$repo_url" ]; then
-                    echo ""
-                    echo "Adding submodule..."
-                    git submodule add "$repo_url" .claude
-                    git submodule update --init
-                    echo "✓ Toolkit added as submodule"
-                    echo ""
-                fi
-            fi
-
-            echo "Will create:"
-            echo "  - $SESSIONS_DIR (for handovers)"
-            echo "  - $PLANS_DIR (for experiments)"
+        # Check if already set up (e.g. setup was run before without adding the submodule)
+        if [ -d "$SESSIONS_DIR" ] && [ -f "$SESSIONS_DIR/README.md" ] && \
+           [ -d "$PLANS_DIR" ] && [ -f "$PLANS_DIR/README.md" ]; then
+            echo "✅ Workspace already configured!"
+            echo "   - $SESSIONS_DIR/ ✓"
+            echo "   - $PLANS_DIR/ ✓"
             echo ""
-            read -p "Proceed? (y/n): " confirm
-            if [ "$confirm" != "y" ]; then
-                echo "Setup cancelled"
-                exit 0
-            fi
+            ALREADY_SETUP=true
         else
-            echo "   (Non-interactive mode - skipping submodule setup)"
-            echo "   Will create workspace structure only"
+            echo "No Toolkit found. You can:"
+            echo "  1. Add Toolkit as git submodule (recommended)"
+            echo "  2. Just create workspace structure"
             echo ""
+
+            # Check if running interactively
+            if [ -t 0 ]; then
+                read -p "Add Toolkit submodule? (y/n): " add_submodule
+
+                if [ "$add_submodule" = "y" ]; then
+                    read -p "Enter Toolkit repo URL (e.g., git@github.com:your-org/toolkit-config.git): " repo_url
+                    if [ -n "$repo_url" ]; then
+                        echo ""
+                        echo "Adding submodule..."
+                        git submodule add "$repo_url" .claude
+                        git submodule update --init
+                        echo "✓ Toolkit added as submodule"
+                        echo ""
+                    fi
+                fi
+
+                echo "Will create:"
+                echo "  - $SESSIONS_DIR (for handovers)"
+                echo "  - $PLANS_DIR (for experiments)"
+                echo ""
+                read -p "Proceed? (y/n): " confirm
+                if [ "$confirm" != "y" ]; then
+                    echo "Setup cancelled"
+                    exit 0
+                fi
+            else
+                echo "   (Non-interactive mode - skipping submodule setup)"
+                echo "   Will create workspace structure only"
+                echo ""
+            fi
+            ALREADY_SETUP=false
         fi
-        ALREADY_SETUP=false
         ;;
 esac
 

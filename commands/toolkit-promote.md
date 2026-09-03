@@ -1,6 +1,7 @@
 ---
-name: toolkit/promote
+name: toolkit-promote
 description: Promote a local experiment (*.local.*) to team-level configuration. Handles plans only (not sessions).
+argument-hint: <file-path>
 ---
 
 # Promote Local Experiment to Team

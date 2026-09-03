@@ -521,7 +521,6 @@ git commit -m "Update to v1.3.0"
 
 ## Related Documentation
 
-- `agents/toolkit-workflows.md` - Toolkit-specific workflows (session, planning)
+- `agents/toolkit-workflows.md` - Toolkit-specific workflows, including contribution
 - `agents/toolkit-architecture.md` - System architecture (submodules)
-- `agents/toolkit-contributing.md` - Contribution guidelines
 - `README.md (Contributing section)` - Detailed contribution guide

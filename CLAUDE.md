@@ -51,9 +51,10 @@ Merge to main                 (team gets it)
 **Full details:** Browse with `make serve` or read agents in `agents/toolkit-`
 
 **Key agents:**
-- `agents/toolkit-architecture.md` - System architecture
-- `agents/toolkit-workflows.md` - Common workflows
-- `agents/toolkit-organization.md` - File organization
+- `agents/toolkit-architecture.md` - System architecture, organization, and diagnosing misplaced/misnamed files
+- `agents/toolkit-workflows.md` - Common workflows, including contribution
+- `agents/toolkit-planning-guide.md` - Exploration-phase planning coaching
+- `agents/toolkit-team-workflows.md` - PR/release/versioning, submodule consumption
 
 ## Helper Commands
 

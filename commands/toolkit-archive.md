@@ -1,3 +1,9 @@
+---
+name: toolkit-archive
+description: Archive completed or stale handover documents to date-organized folders.
+argument-hint: "[--dry-run] [--days N]"
+---
+
 # Archive Handovers
 
 **Command:** `/toolkit-archive [--dry-run] [--days N]`

@@ -276,10 +276,9 @@ You said you want to **provide expert knowledge/coaching**.
 - ✅ Coordinating workflows (read-only agent + Skill delegation)
 
 **Examples:**
-- `agents/toolkit-architecture` - System architecture reference (read-only)
+- `agents/toolkit-architecture` - System architecture reference (read-only; also diagnoses organization issues)
 - `agents/toolkit-workflows` - Workflow coordinator (invokes skills)
-- `agents/toolkit-organization` - Validator/fixer (can move files + invoke skills)
-- `agents/toolkit-scripts-guide` - Script helper (write-capable)
+- `agents/toolkit-team-workflows` - PR/release/versioning coordinator (invokes skills)
 
 **See also:** `rules/toolkit-agents.md` for agent architecture standards
 
@@ -402,7 +401,7 @@ You said you want to **provide expert knowledge/coaching**.
 ### "I want to help users understand workspace structure"
 
 **Options:**
-1. **Agent** - `agents/toolkit-workspace-setup.md`
+1. **Agent** - `agents/toolkit-architecture.md`
    - Provides ongoing coaching
    - ⚠️ Dilutes over time
 

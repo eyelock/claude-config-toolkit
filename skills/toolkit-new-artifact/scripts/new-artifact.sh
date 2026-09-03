@@ -149,21 +149,63 @@ EOF
         ;;
 
     command)
-        echo "⚠️  Command creation not yet implemented"
-        echo "   Manually create: $TARGET_DIR/$FULL_NAME.md"
-        exit 1
+        FILENAME="$TARGET_DIR/$FULL_NAME.md"
+        if [ -f "$FILENAME" ]; then
+            echo "⚠️  File already exists: $FILENAME"
+            exit 1
+        fi
+
+        TITLE=$(echo "$NAME" | sed 's/-/ /g' | awk '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) tolower(substr($i,2))}1')
+
+        cat > "$FILENAME" << EOF
+---
+name: $FULL_NAME
+description: $DESCRIPTION
+argument-hint: <args>
+---
+
+# $TITLE
+
+**Command:** \`/$FULL_NAME <args>\`
+
+**Purpose:** $DESCRIPTION
+
+## Usage
+
+\`\`\`
+/$FULL_NAME <args>
+\`\`\`
+
+## What It Does
+
+1. [Step 1]
+2. [Step 2]
+
+## Implementation
+
+\`\`\`bash
+#!/bin/bash
+set -e
+
+# [implementation]
+\`\`\`
+
+## See Also
+
+- [Related commands, skills, rules]
+EOF
         ;;
 
     skill)
-        echo "⚠️  Skill creation not yet implemented"
-        echo "   Skills require directory structure:"
-        echo "   $TARGET_DIR/$FULL_NAME/SKILL.md"
+        echo "⚠️  Skill scaffolding is not automated (skills need a directory: SKILL.md + scripts/ + templates/)."
+        echo "   Create $TARGET_DIR/$FULL_NAME/SKILL.md by hand, using an existing skill as the pattern to copy,"
+        echo "   e.g. skills/toolkit-new-plan/ (simple, single script) or skills/toolkit-handover/ (multiple scripts)."
         exit 1
         ;;
 
     rule)
-        echo "⚠️  Rule creation not yet implemented"
-        echo "   Manually create: $TARGET_DIR/$FULL_NAME.md"
+        echo "⚠️  Rule scaffolding is not automated here — see other in-flight work on this repo"
+        echo "   regarding the Rule artifact type before creating new rules/ content by hand."
         exit 1
         ;;
 esac

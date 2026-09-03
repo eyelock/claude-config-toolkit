@@ -108,10 +108,10 @@ install:
 
 validate:
 	@echo "Validating frontmatter in session and plan files..."
-	@if [ -f skills/toolkit-validate/validate-frontmatter.sh ]; then \
-		bash skills/toolkit-validate/validate-frontmatter.sh; \
+	@if [ -f skills/toolkit-validate/scripts/validate-frontmatter.sh ]; then \
+		bash skills/toolkit-validate/scripts/validate-frontmatter.sh; \
 	else \
-		echo "⚠️  Validation script not found at skills/toolkit-validate/validate-frontmatter.sh"; \
+		echo "⚠️  Validation script not found at skills/toolkit-validate/scripts/validate-frontmatter.sh"; \
 		echo "Checking for required frontmatter fields manually..."; \
 		for file in sessions/*.md plans/*.md; do \
 			if [ -f "$$file" ] && [ "$$(basename $$file)" != "README.md" ] && [ "$$(basename $$file)" != "TEMPLATE.md" ]; then \
