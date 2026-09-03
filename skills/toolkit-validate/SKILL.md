@@ -1,15 +1,18 @@
 ---
 name: toolkit-validate
-description: Validate frontmatter metadata in handovers, plans, and scripts following Toolkit standards. Performs frictionless validation with hard stops for critical issues and suggestions for optional improvements.
+description: Validate frontmatter metadata in handovers, plans, and scripts, and structural correctness of the Toolkit artifacts themselves (commands, skills, agents, rules), following Toolkit standards. Performs frictionless validation with hard stops for critical issues and suggestions for optional improvements.
 ---
 
 # Toolkit Validation
 
-Validate frontmatter metadata across workspace files.
+Validate frontmatter metadata across workspace files, and structure/frontmatter of the Toolkit
+artifacts themselves.
 
 ## What This Does
 
-Checks frontmatter in:
+Has two modes, backed by two scripts:
+
+**Workspace file validation** (`scripts/validate-frontmatter.sh`) — checks frontmatter in:
 - **Handovers** (`sessions/*.md`)
 - **Plans** (`plans/*.md`)
 
@@ -19,6 +22,18 @@ Validates:
 - Date formats are YYYY-MM-DD
 - Status values are valid
 - File naming follows YYYY-MM-DD-* pattern
+
+**Artifact validation** (`scripts/validate-artifacts.sh`) — checks the artifacts in
+`commands/`, `skills/`, `agents/`, `rules/` themselves:
+- Skills: `name:` in frontmatter matches the parent directory (per the agentskills.io spec)
+- Agents: frontmatter present, `name` matches filename, `description` present and non-trivial,
+  `tools`/`model` (if set) use valid values
+- Commands: frontmatter present with a `description` (for `/help` discoverability)
+- Rules: has a top-level `# Heading`
+- No empty `.md` files anywhere in the four directories
+
+This is the same check `make validate` runs, and it's the structural (free, deterministic) tier
+of the eval suite in `evals/` — see `evals/README.md`.
 
 ## Validation Philosophy: Frictionless
 
@@ -53,6 +68,9 @@ Validates:
 
 # Dry run (show what would be checked)
 /toolkit-validate --dry-run
+
+# Validate the artifacts themselves (commands/skills/agents/rules)
+bash skills/toolkit-validate/scripts/validate-artifacts.sh
 ```
 
 ## What Gets Checked
@@ -126,10 +144,12 @@ Summary: 2 valid, 1 error, 1 suggestion
 
 ## Assets
 
-- `scripts/validate-frontmatter.sh` - Frontmatter validation script
+- `scripts/validate-frontmatter.sh` - Workspace file (sessions/plans) frontmatter validator
+- `scripts/validate-artifacts.sh` - Toolkit artifact (commands/skills/agents/rules) structure validator
 
 ## See Also
 
 - `rules/toolkit-frontmatter-standards.md` - Field naming conventions
 - `rules/toolkit-naming-conventions.md` - File naming standards
 - `commands/toolkit-archive.md` - Archive command (validates before archiving)
+- `evals/README.md` - The eval suite this validator is tier 1 of
