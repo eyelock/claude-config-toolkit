@@ -1,0 +1,12 @@
+{
+  "name": "claude-config-toolkit",
+  "displayName": "Claude Config Toolkit",
+  "version": "0.1.0",
+  "description": "Git-based workflow for developing, sharing, and promoting Claude Code configurations: workshop-vs-product directory separation, artifact scaffolding, and starter commands/skills/agents/hooks.",
+  "author": {
+    "name": "eyelock"
+  },
+  "homepage": "https://github.com/eyelock/claude-config-toolkit",
+  "repository": "https://github.com/eyelock/claude-config-toolkit",
+  "keywords": ["workflow", "scaffolding", "session-continuity", "toolkit"]
+}
