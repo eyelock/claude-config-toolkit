@@ -87,7 +87,7 @@ echo ""
 
 # --- Agents: frontmatter present, name matches filename, description present/specific, tools/model valid ---
 echo "3. Validating agents..."
-VALID_MODELS="sonnet opus haiku inherit"
+VALID_MODELS="sonnet opus haiku fable inherit"
 if [ -d agents ]; then
   for agent_file in agents/*.md; do
     [ -f "$agent_file" ] || continue
@@ -113,8 +113,8 @@ if [ -d agents ]; then
       warn "$agent_file: description is short (${#agent_desc} chars) — Claude uses this to decide when to delegate; be specific"
     fi
 
-    if [ -n "$agent_model" ] && ! grep -qw "$agent_model" <<< "$VALID_MODELS"; then
-      error "$agent_file: model '$agent_model' is not one of: $VALID_MODELS"
+    if [ -n "$agent_model" ] && ! grep -qw "$agent_model" <<< "$VALID_MODELS" && [[ "$agent_model" != *claude* ]]; then
+      error "$agent_file: model '$agent_model' is not a recognized alias ($VALID_MODELS) or a full Claude model id"
     fi
   done
   echo "  ${GREEN}✅${NC} Checked agents"

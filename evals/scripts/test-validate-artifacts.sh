@@ -45,4 +45,24 @@ bash "$BROKEN3/skills/toolkit-validate/scripts/validate-artifacts.sh" >/dev/null
 assert_exit_code "$?" 1 "agent missing description is caught"
 rm -rf "$BROKEN3"
 
+# model: accepts an alias (including fable) or any full Claude model id, not just the 4 aliases.
+GOODMODEL="$(mkscratch)"
+sed -i '' 's/^model: inherit$/model: fable/' "$GOODMODEL/agents/toolkit-workflows.md"
+bash "$GOODMODEL/skills/toolkit-validate/scripts/validate-artifacts.sh" >/dev/null 2>&1
+assert_exit_code "$?" 0 "model: fable is accepted"
+rm -rf "$GOODMODEL"
+
+GOODMODEL2="$(mkscratch)"
+sed -i '' 's/^model: inherit$/model: claude-sonnet-5/' "$GOODMODEL2/agents/toolkit-workflows.md"
+bash "$GOODMODEL2/skills/toolkit-validate/scripts/validate-artifacts.sh" >/dev/null 2>&1
+assert_exit_code "$?" 0 "model: a full claude-* model id is accepted, not just the 4 aliases"
+rm -rf "$GOODMODEL2"
+
+# A genuinely bogus model value should still be caught.
+BADMODEL="$(mkscratch)"
+sed -i '' 's/^model: inherit$/model: gpt-4/' "$BADMODEL/agents/toolkit-workflows.md"
+bash "$BADMODEL/skills/toolkit-validate/scripts/validate-artifacts.sh" >/dev/null 2>&1
+assert_exit_code "$?" 1 "an unrecognized model value is still caught"
+rm -rf "$BADMODEL"
+
 assert_report
