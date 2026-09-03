@@ -1,0 +1,15 @@
+{
+  "name": "claude-config-toolkit",
+  "description": "Git-based workflow for developing, sharing, and promoting Claude Code configurations.",
+  "owner": {
+    "name": "eyelock",
+    "url": "https://github.com/eyelock"
+  },
+  "plugins": [
+    {
+      "name": "toolkit",
+      "source": ".",
+      "description": "Git-based workflow for developing, sharing, and promoting Claude Code configurations."
+    }
+  ]
+}

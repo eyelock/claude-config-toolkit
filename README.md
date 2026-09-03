@@ -8,7 +8,16 @@ A proven approach to writing, sharing, and measuring the impact of AI developmen
 
 ## Quick Start
 
-**One command:** `/toolkit-setup` - It detects your context and does the right thing.
+**Fastest path — install as a plugin:**
+
+```
+/plugin marketplace add eyelock/claude-config-toolkit
+/plugin install toolkit@claude-config-toolkit
+```
+
+This gets you all of Toolkit's commands, skills, agents, and hooks with native versioning and clean updates (`claude plugin update`) — no submodule, no `make install` symlinks. It's the recommended path for new projects; the submodule-based scenarios below still work and remain supported for teams that prefer pinning an exact commit or already have this pattern set up.
+
+**One command either way:** `/toolkit-setup` - It detects your context and does the right thing.
 
 <details>
 <summary>Scenario 1: Team Member (Project with the Toolkit)</summary>
@@ -228,10 +237,12 @@ toolkit-config/                 # The config repository
 ├── README.md                   # This file
 ├── Makefile                    # Development tasks
 ├── index.html                  # Docsify documentation browser
+├── .claude-plugin/             # plugin.json + marketplace.json (native plugin install)
 │
 ├── commands/toolkit-*          # Toolkit commands (git-tracked)
 ├── skills/toolkit-*            # Toolkit skills (git-tracked) - includes interactive skills and reference/standards skills
 ├── agents/toolkit-*            # Toolkit agents (git-tracked)
+├── hooks/                      # hooks.json + scripts (git-tracked)
 │
 ├── plans/                      # Working plans (git-ignored content)
 │   ├── README.md               # How to use plans/
