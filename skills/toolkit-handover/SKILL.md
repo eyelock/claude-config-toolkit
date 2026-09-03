@@ -227,7 +227,7 @@ Next steps:
 
 ## See Also
 
-- `rules/toolkit-session-continuity.md` - When to create handovers
+- `skills/toolkit-session-continuity/SKILL.md` - When to create handovers
 - `commands/toolkit-new-handover.md` - Non-interactive command
 - `commands/toolkit-archive.md` - Non-interactive archival
 - `sessions/TEMPLATE.md` - Handover template

@@ -53,4 +53,4 @@ The script:
 - `/toolkit-choose-artifact` - Create your first experiment
 - `/toolkit-promote` - Promote experiments to team level
 - `/toolkit-new-handover` - Create session handover
-- `rules/toolkit-workspace-separation.md` - Philosophy
+- `skills/toolkit-workspace-separation/SKILL.md` - Philosophy

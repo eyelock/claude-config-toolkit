@@ -117,4 +117,4 @@ sessions/
 ## See Also
 
 - `/toolkit-new-handover` - Create new handover
-- `rules/toolkit-session-continuity.md` - When to archive handovers
+- `skills/toolkit-session-continuity/SKILL.md` - When to archive handovers

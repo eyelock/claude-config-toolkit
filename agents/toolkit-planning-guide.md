@@ -435,7 +435,7 @@ When helping users plan:
 
 ## Key Files to Reference
 
-- `rules/toolkit-workspace-separation.md` - Philosophy
+- `skills/toolkit-workspace-separation/SKILL.md` - Philosophy
 - `commands/toolkit-graduate.md` - Graduation command
 - `plans/TEMPLATE.md` - Working plan template
 - `plans/README-EXAMPLE-GRADUATION.md` - Before/after example

@@ -1,3 +1,8 @@
+---
+name: toolkit-agents
+description: Reference guide for authoring Claude Code subagents in this toolkit — required/optional frontmatter fields, common patterns (read-only advisor, interactive helper, implementation agent), and how the isolated-context execution model actually works. Use when creating or reviewing an agents/toolkit-*.md file.
+---
+
 # Toolkit Agent Standards
 
 When working with Toolkit agents, follow these conventions for Claude Code subagent compatibility.
@@ -8,10 +13,9 @@ When working with Toolkit agents, follow these conventions for Claude Code subag
 
 Unlike other artifact types:
 - **Commands** execute bash operations (one-shot)
-- **Skills** provide interactive workflows (user-invoked, progressive disclosure)
-- **Rules** passively guide behavior (always loaded, modular alternative to CLAUDE.md)
+- **Skills** provide interactive workflows *or* passive reference guidance (user-invoked or Claude-invoked, progressive disclosure)
 - **Plans** document decisions (reference material)
-- **Agents** are delegated to by Claude (background specialists)
+- **Agents** are delegated to by Claude (isolated-context specialists)
 
 ## Required Structure
 
@@ -51,13 +55,18 @@ System prompt content here describing the agent's expertise and behavior.
   - Minimal: `Read` (pure consultation)
 
 **`model`** (optional)
-- Which AI model to use: `sonnet`, `opus`, `haiku`, or `inherit`
+- Which AI model to use: `sonnet`, `opus`, `haiku`, `fable`, a full model id, or `inherit`
 - Default: `inherit` (uses same model as main conversation)
+- Resolution order: invocation param → frontmatter → env var (`CLAUDE_CODE_SUBAGENT_MODEL`) → main model
 - Guidelines:
   - `haiku` - Fast, cheap, good for simple guidance
   - `sonnet` - Balanced, good for most agents
   - `opus` - Most capable, use sparingly (expensive)
   - `inherit` - Match main conversation model
+
+**`permissionMode`** (optional)
+- One of `default`, `acceptEdits`, `auto`, `dontAsk`, `bypassPermissions`, `plan`, `manual`
+- Only honored for project/user/managed/`--agents`-defined subagents — a plugin-packaged agent has this stripped for security, so don't rely on it once an agent ships inside a plugin.
 
 ## Toolkit Agent Patterns
 
@@ -84,13 +93,13 @@ You are an expert in Toolkit architecture...
 
 ```yaml
 ---
-name: toolkit-contributing
-description: Guide contributors through creating and testing Toolkit artifacts. Use when users want to contribute.
+name: toolkit-planning-guide
+description: Guide contributors through exploring and comparing approaches before committing to a plan. Use when users want to think through a design decision.
 tools: Read, Grep, Glob
 model: sonnet
 ---
 
-You help contributors create high-quality Toolkit artifacts...
+You help contributors think through Toolkit design decisions...
 ```
 
 **Best for:** Workflow guides, decision helpers, onboarding
@@ -126,22 +135,22 @@ You generate Toolkit artifacts following established patterns...
 ❌ **Don't use agents when:**
 - User needs to invoke it directly → Use **Skill** instead
 - It's a one-shot operation → Use **Command** instead
-- It's a passive reference → Use **Rule** instead
+- It's passive reference material Claude should read on demand → Use a reference **Skill** instead
 - It's a decision document → Use **Plan** instead
 
 ### Agent vs Skill: The Key Difference
 
 **Agents:**
-- Claude invokes them (background delegation)
-- Run in separate context
-- Loaded at session start (via frontmatter description)
+- Claude invokes them via the Task tool (background delegation)
+- Run in a fresh, **isolated context window** per invocation — no conversation history carries over
+- Only `name` + `description` are visible at session start, for delegation matching; the full system prompt loads only when actually invoked, and never dilutes the main thread
 - Best for: Expert consultation, isolated tasks
 
 **Skills:**
-- User invokes them (e.g., `/toolkit-setup`)
-- Progressive disclosure (only full content when invoked)
-- Interactive Q&A with user
-- Best for: Setup wizards, decision trees, multi-step workflows
+- User invokes them (e.g., `/toolkit-setup`), or Claude invokes them automatically based on `description`
+- Progressive disclosure (only full content loads on invocation; once loaded it persists in the *current* session's context, unlike an agent's isolated one)
+- Can be interactive Q&A with the user, or pure reference material Claude reads and applies silently
+- Best for: Setup wizards, decision trees, multi-step workflows, and standards/conventions documentation
 
 **Example:**
 - ❌ Agent: "Interactive setup wizard" → Should be a **Skill**
@@ -236,4 +245,4 @@ Before committing an agent, verify:
 - Claude Code documentation: https://code.claude.com/docs/en/sub-agents
 - `agents/toolkit-architecture.md` - Example agent
 - `/toolkit-choose-artifact` - Choosing right artifact type
-- `rules/toolkit-frontmatter-standards.md` - General frontmatter conventions
+- `skills/toolkit-frontmatter-standards/SKILL.md` - General frontmatter conventions

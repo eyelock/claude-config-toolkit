@@ -1,3 +1,8 @@
+---
+name: toolkit-session-continuity
+description: Practices for writing, linking, and archiving session handover documents for continuity across stateless Claude Code conversations. Use when deciding whether to write a handover, what makes one good, or how to resume from one.
+---
+
 # Toolkit Session Continuity
 
 Session handovers bridge the gap between stateless AI conversations. Follow these practices:
@@ -125,3 +130,8 @@ draft → in_progress → paused → completed
 - ✅ Context is explicit, not in your head
 
 **If handovers feel like busywork, they're not working.** They should feel like a helpful colleague briefing you.
+
+## See Also
+
+- `/toolkit-handover` - Interactive handover helper
+- `skills/toolkit-workspace-separation/SKILL.md` - Workshop vs product philosophy

@@ -1,3 +1,8 @@
+---
+name: toolkit-workspace-separation
+description: Explains the workshop-vs-product split between git-ignored sessions/plans/ and git-tracked commands/skills/agents/, and the graduation flow for promoting a draft plan to team-shared. Use when deciding where a new file belongs or whether to commit a plan.
+---
+
 # Toolkit Workspace Separation
 
 The Toolkit workspace uses git-ignored working directories for development. Follow these rules:
@@ -26,9 +31,8 @@ The Toolkit workspace uses git-ignored working directories for development. Foll
 
 **What goes here:**
 - ✅ Commands for team use (`commands/`)
-- ✅ Skills for team use (`skills/`)
+- ✅ Skills for team use (`skills/`) — both interactive workflows and reference/standards docs
 - ✅ Agents for team use (`agents/`)
-- ✅ Rules for team use (`rules/`)
 - ✅ Polished documentation
 
 **What NEVER goes here:**
@@ -116,3 +120,8 @@ Implementation steps:
 ```
 
 Notice the difference: **Messy → Clear. Uncertain → Decided. Rough → Polished.**
+
+## See Also
+
+- `/toolkit-graduate` - Promote a working plan to team-shared
+- `skills/toolkit-session-continuity/SKILL.md` - When and how to write handovers

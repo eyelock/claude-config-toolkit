@@ -34,9 +34,8 @@ When users need to understand the system architecture, you:
 
 **Contents:**
 - `commands/` - Claude Code commands
-- `skills/` - Claude Code skills
+- `skills/` - Claude Code skills (interactive workflows and reference/standards docs)
 - `agents/` - Claude Code agents
-- `rules/` - Claude Code rules
 
 **Quality bar:** Ready for production, polished
 
@@ -64,7 +63,6 @@ graph TB
         CR[commands/toolkit-]
         SR[skills/toolkit-]
         AR[agents/toolkit-]
-        RR[rules/toolkit-]
         PR[plans/]
         SS[sessions/]
     end
@@ -78,7 +76,6 @@ graph TB
     CR --> CL
     SR --> CL
     AR --> CL
-    RR --> CL
 
     style PR fill:#f9f,stroke:#333
     style SS fill:#f9f,stroke:#333
@@ -178,9 +175,8 @@ git commit -m "Update Claude configs to v1.2.0"
 **Structure:**
 ```
 commands/toolkit-     - Toolkit commands
-skills/toolkit-       - Toolkit skills
+skills/toolkit-       - Toolkit skills (interactive + reference)
 agents/toolkit-       - Toolkit agents (YOU ARE HERE)
-rules/toolkit-        - Toolkit rules
 ```
 
 **Why namespaces?**
@@ -218,14 +214,6 @@ Projects update submodule                   # Consumption
 
 ## Toolkit Components
 
-### Rules (`rules/toolkit-`)
-
-Define conventions and standards:
-- `frontmatter-standards.md` - Metadata conventions
-- `naming-conventions.md` - File naming patterns
-- `workspace-separation.md` - Workshop vs product philosophy
-- `session-continuity.md` - When to create handovers
-
 ### Commands (`commands/toolkit-`)
 
 Executable operations:
@@ -239,6 +227,13 @@ Interactive workflows:
 - `setup/` - Initialize workspace structure
 - `validate/` - Validate frontmatter metadata
 - `handover/` - Interactive handover helper
+
+Reference skills (standards Claude reads on demand — the modern replacement for a passively-loaded "rules" file, since Claude Code has no mechanism that auto-loads an arbitrary directory of docs):
+- `frontmatter-standards/` - Metadata conventions
+- `naming-conventions/` - File naming patterns
+- `workspace-separation/` - Workshop vs product philosophy
+- `session-continuity/` - When to create handovers
+- `agents/` - Subagent authoring standards
 
 ### Agents (`agents/toolkit-`)
 
@@ -443,4 +438,4 @@ echo -e "sessions/*.md\n!sessions/README.md\nplans/*.md\n!plans/README.md" >> .g
 - `README.md` - Directory structure and getting started
 - `sessions/README.md` - How to use sessions/
 - `plans/README.md` - How to use plans/
-- `rules/toolkit-workspace-separation.md` - Workspace philosophy
+- `skills/toolkit-workspace-separation/SKILL.md` - Workspace philosophy

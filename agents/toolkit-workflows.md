@@ -105,7 +105,7 @@ When users need workflow guidance, you:
 
 ### 3. Contribution Workflow
 
-**When:** Adding new command, skill, agent, or rule
+**When:** Adding new command, skill, or agent
 
 **Steps:**
 
@@ -131,15 +131,15 @@ When users need workflow guidance, you:
    # For agent
    vim agents/namespace/agent-name.md
 
-   # For rule
-   vim rules/namespace/rule-name.md
+   # For a reference skill (standard/convention)
+   mkdir skills/namespace/skill-name
+   vim skills/namespace/skill-name/SKILL.md
    ```
 
 4. **Test functionality:**
    - Commands: Run bash implementation
-   - Skills: Invoke with /skill-name
+   - Skills: Invoke with /skill-name (or confirm Claude consults it when relevant, for a reference skill)
    - Agents: Ask relevant questions
-   - Rules: Verify clarity
 
 5. **Submit PR:**
    ```bash
@@ -367,8 +367,8 @@ Not necessary for every local change.
 
 ## Key Files to Reference
 
-- `rules/toolkit-session-continuity.md` - Session workflow guidance
-- `rules/toolkit-workspace-separation.md` - Planning workflow
+- `skills/toolkit-session-continuity/SKILL.md` - Session workflow guidance
+- `skills/toolkit-workspace-separation/SKILL.md` - Planning workflow
 - `README.md (Contributing section)` - Contribution workflow
 - `commands/toolkit-new-handover.md` - Create handover
 - `commands/toolkit-graduate.md` - Graduate plan
