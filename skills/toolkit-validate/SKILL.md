@@ -130,6 +130,6 @@ Summary: 2 valid, 1 error, 1 suggestion
 
 ## See Also
 
-- `rules/toolkit-frontmatter-standards.md` - Field naming conventions
-- `rules/toolkit-naming-conventions.md` - File naming standards
+- `skills/toolkit-frontmatter-standards/SKILL.md` - Field naming conventions
+- `skills/toolkit-naming-conventions/SKILL.md` - File naming standards
 - `commands/toolkit-archive.md` - Archive command (validates before archiving)

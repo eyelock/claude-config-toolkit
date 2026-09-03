@@ -20,7 +20,7 @@ This project uses a **workshop vs product** model for LLM configuration developm
 ### Root - The Product Layer (git-tracked)
 **Team-shared, polished configurations**
 
-- **`commands/`, `skills/`, `agents/`, `rules/`** - Claude Code configurations
+- **`commands/`, `skills/`, `agents/`** - Claude Code configurations
 - **`plans/`** - Formal plans when committed (git-tracked)
 
 ## Quick Start
@@ -77,7 +77,7 @@ Merge to main                 (team gets it)
 - `plans/` - Working drafts (YYYY-MM-DD-*.md)
 
 **Team Config (git-tracked):**
-- `commands/toolkit-*`, `skills/toolkit-*`, `agents/toolkit-*`, `rules/toolkit-*` - Toolkit artifacts
+- `commands/toolkit-*`, `skills/toolkit-*`, `agents/toolkit-*` - Toolkit artifacts
 - `plans/` - Formal plans when committed (optional)
 
 **Note:** When this repo is used as `.claude/` submodule in projects, committed plans appear as `.claude/plans/`

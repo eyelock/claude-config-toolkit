@@ -1,6 +1,6 @@
 ---
 name: toolkit-new-artifact
-description: Create Toolkit artifacts (agents, commands, skills, rules) with proper structure and frontmatter. Use when users want to contribute a new Toolkit artifact.
+description: Create Toolkit artifacts (agents, commands, skills) with proper structure and frontmatter. Use when users want to contribute a new Toolkit artifact.
 ---
 
 # Toolkit New Artifact Creator
@@ -14,7 +14,7 @@ Create Toolkit artifacts following conventions - proper frontmatter, naming patt
 ```
 
 The skill will prompt you for:
-1. **Artifact type** - Agent, Command, Skill, or Rule
+1. **Artifact type** - Agent, Command, or Skill
 2. **Name** - Without toolkit- prefix
 3. **Description** - What it does
 4. **Tool access** (agents only) - Read-only, Coordinator, or Write-capable
@@ -26,8 +26,7 @@ The skill will prompt you for:
 
 **Coming soon:**
 - ⏳ **Commands** - Bash executors
-- ⏳ **Skills** - Interactive workflows
-- ⏳ **Rules** - Standards/conventions (modular alternative to CLAUDE.md)
+- ⏳ **Skills** - Interactive workflows or reference/standards docs
 
 ## What It Does (Agents)
 
@@ -57,8 +56,8 @@ The skill will prompt you for:
 
 - `/toolkit-choose-artifact` - Decide which artifact type to create
 - `/toolkit-validate` - Validate frontmatter
-- `rules/toolkit-agents.md` - Agent standards and patterns
-- `rules/toolkit-frontmatter-standards.md` - Metadata standards
+- `skills/toolkit-agents/SKILL.md` - Agent standards and patterns
+- `skills/toolkit-frontmatter-standards/SKILL.md` - Metadata standards
 - `agents/toolkit-contributing` - Contribution workflow guidance
 
 ## Implementation

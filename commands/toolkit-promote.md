@@ -38,7 +38,6 @@ After testing your experiment locally, promote it to share with the team:
 - Commands: `my-cmd.local.md` → `.claude/commands/toolkit-my-cmd.md`
 - Skills: `my-skill.local/` → `.claude/skills/toolkit-my-skill/`
 - Agents: `my-agent.local.md` → `.claude/agents/toolkit-my-agent.md`
-- Rules: `my-rule.local.md` → `.claude/rules/toolkit-my-rule.md`
 
 **✗ Rejected:**
 - Sessions (never promoted)
@@ -123,19 +122,17 @@ else
     if [[ "$DIRNAME" == *"plans"* ]]; then
         echo "This is a plan. Where should it go?"
         echo "  1. Command (automation, file ops)"
-        echo "  2. Skill (interactive workflow)"
+        echo "  2. Skill (interactive workflow, or standards/reference doc)"
         echo "  3. Agent (expert guidance)"
-        echo "  4. Rule (standard/convention)"
-        echo "  5. Plan (keep as plan)"
+        echo "  4. Plan (keep as plan)"
         echo ""
-        read -p "Choose (1-5): " choice
+        read -p "Choose (1-4): " choice
 
         case $choice in
             1) ARTIFACT_TYPE="command" ;;
             2) ARTIFACT_TYPE="skill" ;;
             3) ARTIFACT_TYPE="agent" ;;
-            4) ARTIFACT_TYPE="rule" ;;
-            5) ARTIFACT_TYPE="plan" ;;
+            4) ARTIFACT_TYPE="plan" ;;
             *)
                 echo "❌ Invalid choice"
                 exit 1
@@ -152,7 +149,6 @@ else
             command) TARGET_DIR=".claude/commands/toolkit" ;;
             skill) TARGET_DIR=".claude/skills/toolkit" ;;
             agent) TARGET_DIR=".claude/agents/toolkit" ;;
-            rule) TARGET_DIR=".claude/rules/toolkit" ;;
             plan) TARGET_DIR=".claude/plans" ;;
         esac
     else
@@ -160,7 +156,6 @@ else
             command) TARGET_DIR="commands/toolkit" ;;
             skill) TARGET_DIR="skills/toolkit" ;;
             agent) TARGET_DIR="agents/toolkit" ;;
-            rule) TARGET_DIR="rules/toolkit" ;;
             plan) TARGET_DIR="plans" ;;
         esac
     fi
@@ -252,12 +247,11 @@ Source: .claude/plans/my-helper.local.md
 
 This is a plan. Where should it go?
   1. Command (automation, file ops)
-  2. Skill (interactive workflow)
+  2. Skill (interactive workflow, or standards/reference doc)
   3. Agent (expert guidance)
-  4. Rule (standard/convention)
-  5. Plan (keep as plan)
+  4. Plan (keep as plan)
 
-Choose (1-5): 1
+Choose (1-4): 1
 
 Target: .claude/commands/toolkit-my-helper.md
 Type: command
@@ -284,4 +278,4 @@ Only plans and artifacts can be promoted.
 
 - `/toolkit-choose-artifact` - Create local experiments
 - `/toolkit-setup` - Initialize workspace
-- `rules/toolkit-workspace-separation.md` - Local vs team philosophy
+- `skills/toolkit-workspace-separation/SKILL.md` - Local vs team philosophy

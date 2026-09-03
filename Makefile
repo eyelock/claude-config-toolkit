@@ -16,7 +16,7 @@ help:
 	@echo "Development workflow:"
 	@echo "  1. make install     (first time only - symlink to ~/.claude/)"
 	@echo "  2. Restart Claude Code"
-	@echo "  3. Create artifacts in commands/, skills/, agents/, rules/"
+	@echo "  3. Create artifacts in commands/, skills/, agents/"
 	@echo "  4. make validate    (check frontmatter)"
 	@echo "  5. make test        (run all checks)"
 	@echo "  6. git add/commit   (commit changes)"
@@ -33,7 +33,7 @@ install:
 	@echo "Checking existing configuration at ~/.claude/..."
 	@echo ""
 	@FOUND_ISSUES=0; \
-	for artifact in commands/toolkit-*.md skills/toolkit-* agents/toolkit-*.md rules/toolkit-*.md; do \
+	for artifact in commands/toolkit-*.md skills/toolkit-* agents/toolkit-*.md; do \
 		if [ ! -e "$$artifact" ]; then continue; fi; \
 		BASENAME=$$(basename "$$artifact" .md); \
 		TYPE=$$(echo "$$artifact" | cut -d/ -f1); \
@@ -66,12 +66,11 @@ install:
 	@read -p "Proceed with install? (y/n): " confirm && [ "$$confirm" = "y" ] || exit 0
 	@echo ""
 	@echo "🛠️  Installing to user level..."
-	@mkdir -p ~/.claude/skills ~/.claude/commands ~/.claude/agents ~/.claude/rules
+	@mkdir -p ~/.claude/skills ~/.claude/commands ~/.claude/agents
 	@# Remove old namespace symlinks if they exist
 	@[ -L ~/.claude/skills/toolkit ] && rm ~/.claude/skills/toolkit || true
 	@[ -L ~/.claude/commands/toolkit ] && rm ~/.claude/commands/toolkit || true
 	@[ -L ~/.claude/agents/toolkit ] && rm ~/.claude/agents/toolkit || true
-	@[ -L ~/.claude/rules/toolkit ] && rm ~/.claude/rules/toolkit || true
 	@# Create individual symlinks for each artifact
 	@for cmd in commands/toolkit-*.md; do \
 		[ -f "$$cmd" ] || continue; \
@@ -93,13 +92,6 @@ install:
 		[ -L ~/.claude/agents/$$name ] && rm ~/.claude/agents/$$name || true; \
 		ln -s "$(CURDIR)/$$agent" ~/.claude/agents/$$name; \
 		echo "  ✓ Linked agents/$$name"; \
-	done
-	@for rule in rules/toolkit-*.md; do \
-		[ -f "$$rule" ] || continue; \
-		name=$$(basename "$$rule"); \
-		[ -L ~/.claude/rules/$$name ] && rm ~/.claude/rules/$$name || true; \
-		ln -s "$(CURDIR)/$$rule" ~/.claude/rules/$$name; \
-		echo "  ✓ Linked rules/$$name"; \
 	done
 	@echo ""
 	@echo "✅ Installed to ~/.claude/"
@@ -147,7 +139,6 @@ test: validate
 	@test -d commands/toolkit && echo "  ✅ commands/toolkit exists" || echo "  ℹ️  commands/toolkit not present (optional)"
 	@test -d skills/toolkit && echo "  ✅ skills/toolkit exists" || echo "  ℹ️  skills/toolkit not present (optional)"
 	@test -d agents/toolkit && echo "  ✅ agents/toolkit exists" || echo "  ℹ️  agents/toolkit not present (optional)"
-	@test -d rules/toolkit && echo "  ✅ rules/toolkit exists" || echo "  ℹ️  rules/toolkit not present (optional)"
 	@echo ""
 	@echo "2. Checking workspace structure (required)..."
 	@test -d sessions && echo "  ✅ sessions exists" || echo "  ❌ sessions missing"
@@ -159,10 +150,10 @@ test: validate
 	@test -f .gitignore && echo "  ✅ .gitignore exists" || echo "  ❌ .gitignore missing"
 	@echo ""
 	@echo "4. Checking for common issues..."
-	@if [ -d commands ] || [ -d skills ] || [ -d agents ] || [ -d rules ]; then \
-		! find commands skills agents rules -name "*.md" -type f -size 0 2>/dev/null | grep -q . && \
+	@if [ -d commands ] || [ -d skills ] || [ -d agents ]; then \
+		! find commands skills agents -name "*.md" -type f -size 0 2>/dev/null | grep -q . && \
 			echo "  ✅ No empty files" || \
-			(echo "  ⚠️  Found empty files:" && find commands skills agents rules -name "*.md" -type f -size 0); \
+			(echo "  ⚠️  Found empty files:" && find commands skills agents -name "*.md" -type f -size 0); \
 	else \
 		echo "  ℹ️  No artifact directories to check"; \
 	fi
@@ -220,7 +211,7 @@ test: validate
 		else \
 			echo ""; \
 			echo "  ⚠️  Found $$AGENT_ERRORS agent frontmatter error(s)"; \
-			echo "  See rules/toolkit-agents.md for standards"; \
+			echo "  See skills/toolkit-agents/SKILL.md for standards"; \
 			exit 1; \
 		fi; \
 	else \

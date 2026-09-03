@@ -1,3 +1,8 @@
+---
+name: toolkit-naming-conventions
+description: Naming conventions for Toolkit files — date-first pattern for sessions/plans, lowercase-hyphen directories, and the toolkit- namespace prefix. Use when creating or renaming any Toolkit file.
+---
+
 # Toolkit Naming Conventions
 
 When working with Toolkit session workspace, follow these naming patterns:
@@ -56,13 +61,13 @@ Use lowercase with hyphens:
 All Toolkit meta-tools use `toolkit` prefix or directory:
 
 ```
-✅ rules/toolkit-frontmatter-standards.md
+✅ skills/toolkit-frontmatter-standards/SKILL.md
 ✅ commands/toolkit-new-handover.md
 ✅ skills/toolkit-setup/SKILL.md
 ✅ agents/toolkit-architecture.md
 
-❌ rules/frontmatter-standards.md       # No namespace
-❌ commands/create-handover.md          # No namespace
+❌ skills/frontmatter-standards/SKILL.md   # No namespace
+❌ commands/create-handover.md             # No namespace
 ```
 
 ## Why Date-First?
@@ -80,3 +85,8 @@ All Toolkit meta-tools use `toolkit` prefix or directory:
 | Plan | `YYYY-MM-DD-description.md` | `2026-02-02-api-design.md` |
 | Script | `YYYY-MM-DD-description.sh` | `2026-02-02-migrate.sh` |
 | Archive | `archive/YYYY-MM/` | `archive/2026-02/` |
+
+## See Also
+
+- `skills/toolkit-frontmatter-standards/SKILL.md` - Frontmatter conventions
+- `/toolkit-choose-artifact` - Choosing right artifact type

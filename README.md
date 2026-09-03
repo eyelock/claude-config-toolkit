@@ -91,23 +91,22 @@ A proven approach to writing, sharing, and measuring the impact of AI developmen
 
 ## 🧩 Artifact Types at a Glance
 
-Claude Code supports five artifact types. Each has different characteristics for context, interaction, and execution:
+Claude Code supports four artifact types. Each has different characteristics for context, interaction, and execution:
 
 | Type | Purpose | Interaction | Context Behavior | Best For |
 |------|---------|-------------|------------------|----------|
 | **Command** | Execute bash operations | User invokes → Sees output | Fresh each time, no dilution | Automation, file ops, git tasks |
-| **Skill** | Guide interactive workflows | User invokes → Interactive Q&A | Progressive disclosure, fresh on invoke | Setup wizards, decision helpers, multi-step processes |
-| **Agent** | Provide expert coaching | LLM-direct (background) | Loaded at start, ⚠️ dilutes over hours | Domain expertise, best practices, architecture guidance |
-| **Rule** | Define standards/conventions (modular alternative to CLAUDE.md) | Always loaded (passive) | Loaded at start, ⚠️ dilutes over time | Naming conventions, quick reference, style guides |
+| **Skill** | Guide interactive workflows *or* provide passive reference/standards guidance | User invokes, or Claude invokes automatically → Interactive Q&A or silent reference | Progressive disclosure: name+description loaded at startup, full content only when invoked, then persists for the session | Setup wizards, decision helpers, multi-step processes, naming/frontmatter conventions, style guides |
+| **Agent** | Provide expert coaching in an isolated context | Claude delegates via the Task tool (background) | Only name+description loaded at startup for delegation matching; full system prompt loads fresh, in an isolated context, only when invoked — never dilutes the main thread | Domain expertise, best practices, architecture guidance |
 | **Plan** | Document implementation | Reference material | Read when needed | Architecture decisions, feature designs, approach docs |
 
 **Key Insights:**
-- 🔄 **Context dilution**: Agents and Rules fade in long conversations → Use Skills for frequently-invoked guidance
+- 🔄 **Context dilution**: A Skill's content persists in the *current* session once loaded → for guidance you want the model to consult without dragging it into every conversation, an Agent's isolated per-invocation context avoids that cost entirely
 - ⚡ **Progressive disclosure**: Skills load name+description at startup, full content on invocation → Keeps context efficient
 - 🎯 **Tool availability**: Agents can be read-only (exploration) or read-write (task completion) → Tools shape behavior
-- 💬 **Interaction model**: Commands execute, Skills interact, Agents coach, Rules guide passively
+- 💬 **Interaction model**: Commands execute, Skills interact or advise, Agents coach in isolation
 - 🔐 **Principle of Least Privilege**: Read-only agents can invoke write-capable Skills → Agent coordinates, Skill executes with full permissions
-- 📂 **Modular configuration**: Rules are a modular alternative to monolithic CLAUDE.md files → Split concerns across multiple focused files
+- 📂 **Reference skills**: A reference/standards Skill (e.g. naming conventions, frontmatter standards) is the modern replacement for a passively-loaded "rules" file — Claude Code has no mechanism that auto-loads an arbitrary directory of standards docs, so standards live as Skills Claude reads on demand instead
 
 **Not sure which to use?** Invoke `/toolkit-choose-artifact` for an interactive decision helper.
 
@@ -170,7 +169,7 @@ Claude Code supports five artifact types. Each has different characteristics for
 <summary>Interactive Skills</summary>
 
 **Interactive Skills:**
-- `/toolkit-choose-artifact` - Help choosing the right artifact type (command/skill/agent/rule/plan)
+- `/toolkit-choose-artifact` - Help choosing the right artifact type (command/skill/agent/plan)
 - `/toolkit-setup` - Initialize workspace structure
 - `/toolkit-validate` - Validate frontmatter metadata
 - `/toolkit-handover` - Create and manage session handovers
@@ -190,7 +189,7 @@ Claude Code supports five artifact types. Each has different characteristics for
 <summary>Standards & Guides</summary>
 
 **Standards & Guides:**
-- `rules/toolkit-*` - Naming conventions, frontmatter standards, workspace separation
+- `skills/toolkit-*` - Naming conventions, frontmatter standards, workspace separation, agent authoring (reference skills, read on demand)
 - `agents/toolkit-*` - Expert guidance on workflows, planning, architecture, contributing
 
 </details>
@@ -231,9 +230,8 @@ toolkit-config/                 # The config repository
 ├── index.html                  # Docsify documentation browser
 │
 ├── commands/toolkit-*          # Toolkit commands (git-tracked)
-├── skills/toolkit-*            # Toolkit skills (git-tracked)
+├── skills/toolkit-*            # Toolkit skills (git-tracked) - includes interactive skills and reference/standards skills
 ├── agents/toolkit-*            # Toolkit agents (git-tracked)
-├── rules/toolkit-*             # Toolkit rules (git-tracked)
 │
 ├── plans/                      # Working plans (git-ignored content)
 │   ├── README.md               # How to use plans/
@@ -283,7 +281,7 @@ sessions/*.md
 
 **Can you use this workspace pattern without the Toolkit starter configs?**
 
-**Yes!** The core concept is separating workspace (sessions/plans) from configs (commands/skills/agents/rules).
+**Yes!** The core concept is separating workspace (sessions/plans) from configs (commands/skills/agents).
 
 ### Two Patterns Without Toolkit
 
@@ -332,11 +330,11 @@ echo ".claude/plans/*.md" >> .gitignore
 - `/toolkit-new-handover` - manual file creation instead
 - `/toolkit-graduate` - manual rename and git commit instead
 - `/toolkit-validate` - no frontmatter validation
-- No starter agents/skills/rules/commands
+- No starter agents/skills/commands
 
 **What you keep:**
 - The workspace pattern (sessions/plans/)
-- Your own commands/skills/agents/rules
+- Your own commands/skills/agents
 - The three-tier development model
 - Git-based distribution
 
@@ -354,7 +352,7 @@ Toolkit provides automation and starters, but the core pattern is just directori
 1. Run `make serve` to browse documentation
 2. Read `agents/toolkit-architecture.md` - System overview
 3. Try `/toolkit-choose-artifact` - Interactive guide
-4. Explore the artifact types in `commands/`, `skills/`, `agents/`, `rules/`
+4. Explore the artifact types in `commands/`, `skills/`, `agents/`
 
 ### Path 2: Setting Up a Project
 
@@ -420,7 +418,7 @@ Toolkit provides automation and starters, but the core pattern is just directori
    ```
    /toolkit-choose-artifact    # Interactive guide walks you through it
    ```
-   This will help you choose: Command, Skill, Agent, or Rule
+   This will help you choose: Command, Skill, or Agent
 
 5. **Test it, then submit a PR**
 

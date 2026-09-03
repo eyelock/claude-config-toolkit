@@ -53,8 +53,8 @@ A working plan with:
 
 - `/toolkit-graduate` - Promote plan to formal documentation
 - `plans/TEMPLATE.md` - Template structure
-- `rules/toolkit-frontmatter-standards.md` - Metadata standards
-- `rules/toolkit-naming-conventions.md` - Naming conventions
+- `skills/toolkit-frontmatter-standards/SKILL.md` - Metadata standards
+- `skills/toolkit-naming-conventions/SKILL.md` - Naming conventions
 - `agents/toolkit-planning-guide` - Planning workflow guidance
 
 ## Implementation

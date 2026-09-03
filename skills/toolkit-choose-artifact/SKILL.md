@@ -1,21 +1,21 @@
 ---
 name: toolkit-choose-artifact
-description: Interactive guide to help you choose the right Claude Code artifact type (command, skill, agent, rule, or plan) based on your needs. Asks targeted questions about purpose, interaction model, tool requirements, and context persistence to recommend the best fit.
+description: Interactive guide to help you choose the right Claude Code artifact type (command, skill, agent, or plan) based on your needs. Asks targeted questions about purpose, interaction model, tool requirements, and context persistence to recommend the best fit.
 ---
 
 # Choose the Right Artifact Type
 
-**I'll help you decide whether to create a command, skill, agent, rule, or plan.**
+**I'll help you decide whether to create a command, skill, agent, or plan.**
 
 This skill uses an interactive decision tree to understand your needs and recommend the right artifact type.
 
 ## Why This Matters
 
 Each artifact type has different characteristics:
-- **Context persistence** - How they behave in long conversations
-- **Interaction model** - User-interactive vs LLM-direct
+- **Context behavior** - How they behave in long conversations
+- **Interaction model** - User-interactive vs Claude-direct delegation
 - **Tool availability** - What operations they can perform
-- **Invocation timing** - Always loaded vs on-demand
+- **Invocation timing** - On-demand vs delegated vs reference
 
 Choosing the right type ensures your contribution works as intended.
 
@@ -24,9 +24,9 @@ Choosing the right type ensures your contribution works as intended.
 | If you need... | Use this |
 |----------------|----------|
 | Execute bash operation immediately | **Command** |
-| Guide user through multi-step workflow | **Skill** |
-| Provide expert coaching/guidance | **Agent** |
-| Define standard/convention | **Rule** |
+| Guide user through a multi-step workflow | **Skill** (interactive) |
+| Hold a standard, convention, or quick-reference doc | **Skill** (reference) |
+| Provide expert coaching/guidance in an isolated context | **Agent** |
 | Document implementation approach | **Plan** |
 
 ## Interactive Decision Process
@@ -50,10 +50,10 @@ Let me ask you some questions to find the best fit:
 - Examples: Architecture guidance, best practices, domain expertise
 - Go to Question 4 to confirm
 
-**D. Define standard, convention, or rule**
-→ Definitely a **Rule**
-- Examples: Naming conventions, frontmatter standards, when to use patterns
-- ✅ Use **Rule** → See "Rules Deep Dive" below
+**D. Define a standard, convention, or quick-reference doc**
+→ Definitely a **Skill** — written as reference content Claude reads on demand rather than an interactive wizard
+- Examples: Naming conventions, frontmatter standards, when-to-use patterns
+- ✅ Use **Skill (reference)** → See "Reference Skills" in the Skills Deep Dive below
 
 **E. Document implementation plan**
 → Definitely a **Plan**
@@ -93,15 +93,12 @@ You said you want to **guide user through interactive workflow**.
 
 **A. Yes - user might invoke multiple times in one session**
 → ✅ Definitely use **Skill**
-- Progressive disclosure keeps context fresh
-- Not subject to dilution
-- Example: `/toolkit-handover` invoked whenever creating handover
+- Progressive disclosure keeps the startup footprint small
+- Once invoked, its body persists in the session's context — keep it to standing instructions, not narration
+- Example: `/toolkit-handover` invoked whenever creating a handover
 
-**B. No - more of ongoing coaching throughout conversation**
-→ 🤔 Consider **Agent** instead
-- Agents provide continuous guidance
-- Better for "always available" expertise
-- But note: Subject to context dilution over time
+**B. No - it's reference content Claude should consult, not a wizard**
+→ ✅ Still a **Skill**, just written as reference material instead of an interactive flow — see "Reference Skills" below
 
 **Does it need to execute operations or just guide?**
 
@@ -111,8 +108,7 @@ You said you want to **guide user through interactive workflow**.
 - Examples: `/toolkit-setup` creates directories
 
 **B. Just guide with instructions**
-→ ✅ Still use **Skill** if invoked on-demand
-→ 🤔 Consider **Agent** if ongoing coaching
+→ ✅ Still use **Skill**, whether that's an interactive Q&A or a reference doc Claude reads silently
 
 ---
 
@@ -120,19 +116,17 @@ You said you want to **guide user through interactive workflow**.
 
 You said you want to **provide expert knowledge/coaching**.
 
-**When should this guidance be available?**
+**Does this need to hold a multi-turn conversation with the user, or is it a task Claude delegates to?**
 
-**A. Always throughout the conversation**
+**A. It's a task Claude delegates to (background specialist)**
 → ✅ Use **Agent**
-- Loaded at session start
-- Provides ongoing expertise
-- ⚠️ Warning: Context dilution - impact fades after hours of conversation
+- Runs in a fresh, **isolated context** per invocation — no conversation history carried in
+- Only `name` + `description` are visible at session start for delegation matching; the full system prompt loads only when actually invoked, and the cost never touches the main thread
+- Not "always loaded" and doesn't dilute anything — the tradeoff is a fresh isolated call each time, not context pollution
 
-**B. Only when user explicitly asks for help**
-→ 🤔 Consider **Skill** instead
-- Invoked on-demand
-- Fresh context each time
-- No dilution problem
+**B. It needs to interact with the user directly, back and forth**
+→ ❌ Not a good fit for Agent — a subagent invocation is a one-shot task delegation, it can't hold an interactive loop with the user the way skill content running in the main thread can
+→ 🤔 Use **Skill** instead
 - Example: This very skill you're using!
 
 **Does it need to execute operations?**
@@ -143,11 +137,11 @@ You said you want to **provide expert knowledge/coaching**.
 - Follows Principle of Least Privilege
 - Example: `toolkit-workflows` agent invokes `/toolkit-new-handover` skill
 - Agent coordinates, Skill executes
-- See `rules/toolkit-agents.md` for details
+- See `skills/toolkit-agents/SKILL.md` for details
 
 **B. No - just coaching/guidance**
-→ ✅ Use **Agent** for ongoing coaching
-→ 🤔 Use **Skill** for on-demand coaching (avoids dilution)
+→ ✅ Use **Agent** when Claude should be able to delegate to it automatically
+→ 🤔 Use **Skill** if it's the user who needs to invoke it directly
 
 ---
 
@@ -164,7 +158,6 @@ You said you want to **provide expert knowledge/coaching**.
 - Not loaded at startup
 - Invoked on-demand
 - Fresh execution each time
-- ✅ Not affected by context dilution
 
 **Tool availability:**
 - Bash execution
@@ -191,23 +184,22 @@ You said you want to **provide expert knowledge/coaching**.
 **When NOT to use:**
 - ❌ Need user interaction during execution → Use Skill
 - ❌ Need ongoing guidance → Use Agent
-- ❌ Defining a standard → Use Rule
+- ❌ Defining a standard → Use a reference Skill
 
 ---
 
 ### Skills
 
 **What they are:**
-- Interactive workflows with progressive disclosure
-- Invoked via `/skill-name`
-- Guide user through multi-step processes
+- Interactive workflows *or* reference/standards content Claude reads on demand
+- Invoked via `/skill-name` (by the user) or automatically by Claude (matching `description`)
+- Can guide a user through a multi-step process, or hold quick-reference material with no interaction at all
 - Can bundle scripts, templates, assets
 
 **Context behavior:**
-- ✅ Progressive disclosure (name+description at startup, full content on invocation)
-- ✅ Fresh context each invocation
-- ✅ Not affected by dilution
-- Perfect for long-running conversations
+- ✅ Progressive disclosure (name+description at startup, full content loaded only on invocation)
+- Once loaded, a skill's body **persists in the session's context for the rest of the conversation** — it isn't re-read each turn, so write standing instructions, not narration
+- Perfect for long-running conversations precisely because you control when it loads
 
 **Tool availability:**
 - Full tool access
@@ -215,10 +207,8 @@ You said you want to **provide expert knowledge/coaching**.
 - Can bundle executable assets
 
 **Interaction model:**
-- Interactive Q&A
-- Multi-step workflows
-- Can execute bundled scripts
-- User is actively engaged
+- Interactive Q&A and multi-step workflows, **or**
+- Pure reference material Claude applies silently, with no back-and-forth
 
 **Best for:**
 - ✅ Setup wizards
@@ -226,32 +216,36 @@ You said you want to **provide expert knowledge/coaching**.
 - ✅ Multi-step processes
 - ✅ Interactive configuration
 - ✅ Guided workflows
+- ✅ Naming/frontmatter conventions, style guides, standards docs (**reference skills**)
+
+**Reference Skills**
+
+A "reference skill" is just a Skill whose body has no interactive flow — it's a standard, convention, or quick-reference doc that Claude reads and applies when relevant, the same way older "always-loaded rules" tried to work, except Claude Code has no mechanism that auto-loads an arbitrary directory of standards docs. A Skill's `description` is what gets Claude to consult it — write it as specifically as you would for a wizard-style skill.
 
 **Examples:**
-- `/toolkit-setup` - Initialize workspace
-- `/toolkit-handover` - Create handover interactively
-- `/toolkit-choose-artifact` - This skill!
+- `/toolkit-setup` - Initialize workspace (interactive)
+- `/toolkit-handover` - Create handover interactively (interactive)
+- `/toolkit-choose-artifact` - This skill! (interactive)
+- `skills/toolkit-naming-conventions/SKILL.md` - File naming standards (reference)
+- `skills/toolkit-frontmatter-standards/SKILL.md` - Frontmatter conventions (reference)
 
 **When NOT to use:**
 - ❌ Simple bash execution → Use Command
-- ❌ Ongoing passive guidance → Use Agent or Rule
-- ❌ Just defining a standard → Use Rule
+- ❌ Ongoing, proactive coaching across a whole session, delegated by Claude rather than invoked → Use Agent
 
 ---
 
 ### Agents
 
 **What they are:**
-- Expert coaching and guidance
-- Loaded based on agent description matching task
-- Provide domain expertise
-- LLM talks directly to them (not user-interactive)
+- Expert coaching and guidance Claude delegates to via the Task tool
+- Invoked based on the agent's `description` matching the current task, or explicitly
+- Provide domain expertise in a background, isolated specialist
 
 **Context behavior:**
-- ⚠️ Loaded at session start (or when task matches)
-- ⚠️ Subject to context dilution over hours
-- Impact fades in long conversations
-- Better at session start than hours later
+- Only `name` + `description` are loaded at session start, for delegation matching
+- The full system prompt loads fresh, in an **isolated context window**, only when actually invoked — no conversation history carried in, and it never touches or dilutes the main thread
+- Each invocation is a clean slate; the "cost" is a fresh call, not accumulated context pollution
 
 **Tool availability:**
 - Can specify tool subset for agent
@@ -259,86 +253,35 @@ You said you want to **provide expert knowledge/coaching**.
 - Agents invoke Skills when write operations needed
 - Skills run with their own permissions (not limited by agent)
 - Example: Read-only agent → invokes write-capable skill
-- See `rules/toolkit-agents.md` for architecture details
+- See `skills/toolkit-agents/SKILL.md` for architecture details
 
 **Interaction model:**
-- LLM-direct (not user-interactive)
+- Claude-delegated (not directly user-interactive — can't hold a multi-turn conversation with the user)
 - Provides expertise and coaching
-- Influences behavior and decisions
-- Background guidance
+- Influences behavior and decisions within the task it was given
 
 **Best for:**
 - ✅ Domain expertise (architecture, workflows)
 - ✅ Coding standards coaching
 - ✅ Best practices guidance
 - ✅ Specialized knowledge areas
-- ✅ Session-start guidance
+- ✅ Available for Claude to delegate to automatically
 - ✅ Coordinating workflows (read-only agent + Skill delegation)
 
 **Examples:**
 - `agents/toolkit-architecture` - System architecture reference (read-only)
 - `agents/toolkit-workflows` - Workflow coordinator (invokes skills)
-- `agents/toolkit-organization` - Validator/fixer (can move files + invoke skills)
-- `agents/toolkit-scripts-guide` - Script helper (write-capable)
 
-**See also:** `rules/toolkit-agents.md` for agent architecture standards
+**See also:** `skills/toolkit-agents/SKILL.md` for agent architecture standards
 
 **When NOT to use:**
-- ❌ Long-running conversations → Use Skill (no dilution)
-- ❌ Need frequent re-invocation → Use Skill
+- ❌ Needs a multi-turn conversation with the user → Use Skill
 - ❌ Execute operations → Use Command or Skill
-- ❌ Define standards → Use Rule
+- ❌ Define standards → Use a reference Skill
 
-**Context dilution workaround:**
-- Make it a **Skill** instead if used frequently
-- User can re-invoke to get fresh context
-- Example: This artifact guide is a skill, not an agent!
-
----
-
-### Rules
-
-**What they are:**
-- Standards, conventions, patterns
-- **Modular alternative to monolithic CLAUDE.md files**
-- Always loaded at session start
-- Passive influence on behavior
-- Quick reference guides
-
-**Context behavior:**
-- ⚠️ Loaded at startup
-- ⚠️ Subject to context dilution
-- Passive influence (not invoked)
-- Better for quick reference than complex decisions
-
-**Tool availability:**
-- None - just guidance text
-- No execution capability
-
-**Interaction model:**
-- Always present
-- Passive influence
-- No invocation needed
-- LLM refers to them as needed
-
-**Best for:**
-- ✅ Naming conventions
-- ✅ Frontmatter standards
-- ✅ Code style guidelines
-- ✅ When to use patterns
-- ✅ Quick reference material
-- ✅ Breaking up large CLAUDE.md files into focused, modular pieces
-
-**Examples:**
-- `rules/toolkit-naming-conventions.md`
-- `rules/toolkit-frontmatter-standards.md`
-- `rules/toolkit-session-continuity.md`
-
-**When NOT to use:**
-- ❌ Complex decision trees → Use Skill
-- ❌ Execute operations → Use Command
-- ❌ Deep coaching → Use Agent
-- ❌ Implementation details → Use Plan
+**If an agent feels like the wrong fit:**
+- Make it a **Skill** instead if the user needs to invoke it directly, or if it needs to interact with them
+- Agents and Skills solve different problems — pick by *who* invokes it and *whether it talks to the user*, not by worrying about context cost, since neither type dilutes the main thread when used as intended
 
 ---
 
@@ -375,7 +318,7 @@ You said you want to **provide expert knowledge/coaching**.
 
 **When NOT to use:**
 - ❌ Executable operations → Use Command or Skill
-- ❌ Standards → Use Rule
+- ❌ Standards → Use a reference Skill
 - ❌ Ongoing guidance → Use Agent
 
 ---
@@ -402,43 +345,34 @@ You said you want to **provide expert knowledge/coaching**.
 ### "I want to help users understand workspace structure"
 
 **Options:**
-1. **Agent** - `agents/toolkit-workspace-setup.md`
-   - Provides ongoing coaching
-   - ⚠️ Dilutes over time
+1. **Agent** - `agents/toolkit-architecture.md`
+   - Available for Claude to delegate to automatically
+   - Isolated context, no dilution risk
 
-2. **Skill** - `/toolkit-workspace-help`
-   - On-demand guidance
-   - ✅ Fresh context each time
+2. **Skill (reference)** - `skills/toolkit-workspace-separation/SKILL.md`
+   - Quick reference, read on demand
+   - ✅ Also fresh context each time it's read
 
-3. **Rule** - `rules/toolkit-workspace-separation.md`
-   - Quick reference
-   - ⚠️ Passive, dilutes over time
-
-**Recommendation:** Agent + Rule
-- Agent for detailed coaching
-- Rule for quick reference
-- Consider Skill if invoked frequently
+**Recommendation:** Agent + reference Skill
+- Agent for detailed, Claude-delegated coaching
+- Reference Skill for a quick lookup the user (or Claude) can consult directly
 
 ---
 
 ### "I want to enforce naming conventions"
 
 **Options:**
-1. **Rule** - `rules/toolkit-naming-conventions.md`
-   - ✅ Always loaded
-   - Passive influence
+1. **Skill (reference)** - `skills/toolkit-naming-conventions/SKILL.md`
+   - Claude reads it on demand when relevant
+   - Passive-feeling, but explicitly invoked/consulted rather than silently "always loaded"
 
-2. **Command** - `/toolkit/validate-names`
-   - Active checking
-   - Explicit execution
-
-3. **Skill** - `/toolkit-validate`
+2. **Skill (active)** - `/toolkit-validate`
    - Interactive validation
    - Guided fixes
 
-**Recommendation:** Rule + Skill
-- Rule for passive guidance
-- Skill for active validation and help
+**Recommendation:** Reference Skill + validation Skill
+- Reference skill for the standard itself
+- `/toolkit-validate` for actively checking and fixing violations
 
 ---
 
@@ -446,29 +380,28 @@ You said you want to **provide expert knowledge/coaching**.
 
 **Options:**
 1. **Agent** - Provides coaching
-   - ⚠️ Context dilution problem
+   - Isolated per-invocation, can't hold an interactive back-and-forth with the user
 
 2. **Skill** - Interactive decision tree
-   - ✅ Fresh context on invocation
+   - ✅ User-interactive, multi-turn
    - ✅ Perfect for this use case
 
 **Recommendation:** Skill (like this one!)
 - Progressive disclosure
-- No context dilution
-- Interactive Q&A
+- Interactive Q&A a subagent invocation can't do
 
 ---
 
 ### "I want to help users write better commit messages"
 
 **Options:**
-1. **Rule** - Standards document
-   - Passive guidance
+1. **Skill (reference)** - Standards document
+   - Claude reads it when relevant
 
 2. **Agent** - Coaching on commits
-   - ⚠️ Dilutes over time
+   - Claude-delegated, isolated
 
-3. **Skill** - `/write-commit`
+3. **Skill (interactive)** - `/write-commit`
    - Interactive commit helper
    - Asks questions, generates message
 
@@ -476,10 +409,10 @@ You said you want to **provide expert knowledge/coaching**.
    - Analyzes changes, creates commit
    - Quick execution
 
-**Recommendation:** Rule + Command
-- Rule for standards
+**Recommendation:** Reference Skill + Command
+- Reference skill for the standard
 - Command for execution
-- Or Skill for interactive guidance
+- Or an interactive Skill if you want guided message-writing
 
 ---
 
@@ -495,36 +428,13 @@ You said you want to **provide expert knowledge/coaching**.
 
 ---
 
-### ❌ Agent for frequently-invoked guidance
+### ❌ Agent expected to hold a conversation with the user
 
-**Problem:** Context dilution in long conversations
-
-**Solution:** Make it a Skill
-- Progressive disclosure
-- Fresh context each invocation
-- Example: This artifact guide is a skill!
-
----
-
-### ❌ Skill for passive reference material
-
-**Problem:** Skills are for active invocation
-
-**Solution:** Make it a Rule instead
-- Always loaded
-- Quick reference
-- No invocation needed
-
----
-
-### ❌ Rule with complex decision trees
-
-**Problem:** Rules are passive, dilute over time
+**Problem:** A subagent invocation is an isolated, one-shot task delegation — it can't do a multi-turn Q&A with the user the way skill content running in the main thread can
 
 **Solution:** Make it a Skill
-- Interactive decision making
-- Fresh context when needed
-- Active guidance
+- Runs in the main thread, can ask questions and wait for answers
+- Example: This artifact guide is a skill, not an agent!
 
 ---
 
@@ -548,7 +458,6 @@ You said you want to **provide expert knowledge/coaching**.
 - Commands: `my-command.local.md`
 - Skills: `my-skill.local/SKILL.md`
 - Agents: `my-agent.local.md`
-- Rules: `my-rule.local.md`
 - Plans: `my-plan.local.md`
 
 **Git pattern:** `*.local.*` matches all of these
@@ -592,7 +501,6 @@ You said you want to **provide expert knowledge/coaching**.
 - Moves to `.claude/commands/toolkit-<name>.md` (for commands)
 - Or `.claude/skills/toolkit-<name>/` (for skills - directory)
 - Or `.claude/agents/toolkit-<name>.md` (for agents)
-- Or `.claude/rules/toolkit-<name>.md` (for rules)
 
 **Sessions never get promoted:**
 - Sessions are short-term (days)
@@ -605,24 +513,17 @@ You said you want to **provide expert knowledge/coaching**.
 
 **Notice what this artifact guide is:**
 
-✅ **A Skill** - Not an agent, not a rule!
+✅ **A Skill** - Not an agent!
 
 **Why?**
 - 📋 Invoked on-demand (`/toolkit-choose-artifact`)
 - 🔄 Progressive disclosure (name+description at startup, full content now)
 - 🎯 Interactive decision tree
-- ✨ Fresh context each invocation
-- ⏱️ Not subject to dilution (you can invoke multiple times)
+- 💬 Needs a multi-turn conversation with the user
 
 **Why NOT an agent?**
-- ❌ Would dilute over long conversations
-- ❌ Not needed as ongoing background guidance
-- ❌ Better invoked when actually needed
-
-**Why NOT a rule?**
-- ❌ Too complex for passive reference
-- ❌ Interactive Q&A doesn't fit rule model
-- ❌ Decision tree needs active guidance
+- ❌ Agent invocations are isolated, one-shot delegations — no back-and-forth with the user
+- ❌ This needs to ask questions and wait for answers, which only works in the main thread
 
 **Why NOT a command?**
 - ❌ Not executing an operation
@@ -639,8 +540,8 @@ Based on our conversation, what artifact type do you think fits your needs?
 
 If you're still unsure, tell me:
 1. What you're trying to accomplish
-2. When it should be available (always vs on-demand)
+2. Who invokes it — the user directly, or Claude delegating automatically?
 3. Does it execute operations or provide guidance?
-4. Does it need user interaction?
+4. Does it need a multi-turn conversation with the user?
 
 I'll help you choose the right type!
