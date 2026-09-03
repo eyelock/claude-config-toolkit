@@ -152,6 +152,13 @@ Claude Code supports five artifact types. Each has different characteristics for
 - Gather feedback through PRs
 - Iterate based on real usage
 
+## Testing & Evals
+
+Three tiers of regression coverage for the artifacts in this repo — free structural/frontmatter
+validation, free bundled-script unit tests, and optional LLM-in-the-loop checks that a skill
+actually triggers on the prompts it's meant for. Run `make test` (free) or `make eval` (needs
+`ANTHROPIC_API_KEY`). See [`evals/README.md`](evals/README.md) for the full breakdown.
+
 ## Project vs User Scopes
 
 **PROJECT-scoped configs** (in this repo):

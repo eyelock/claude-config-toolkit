@@ -1,28 +1,32 @@
-.PHONY: help install validate clean test serve
+.PHONY: help install validate clean test test-scripts eval serve
 
 # Default target
 help:
 	@echo "Claude Config Toolkit - Available Targets"
 	@echo ""
 	@echo "Setup:"
-	@echo "  make install    - Install Toolkit to ~/.claude/ for development (symlinks)"
+	@echo "  make install      - Install Toolkit to ~/.claude/ for development (symlinks)"
 	@echo ""
 	@echo "Development:"
-	@echo "  make validate   - Validate frontmatter in all session and plan files"
-	@echo "  make test       - Run all validation and checks"
-	@echo "  make clean      - Archive old session files, clean up workspace"
-	@echo "  make serve      - Start docsify server for browsing docs (port 3000)"
+	@echo "  make validate     - Validate frontmatter (sessions/plans) + artifact structure (free, deterministic)"
+	@echo "  make test-scripts - Run bundled-script unit tests + eval grading-logic tests (free, deterministic)"
+	@echo "  make test         - validate + test-scripts (what CI always runs)"
+	@echo "  make eval         - Run LLM-in-the-loop skill/agent triggering + e2e evals (uses your normal local"
+	@echo "                      Claude Code auth; CI instead gates this on an ANTHROPIC_API_KEY secret — see evals/README.md)"
+	@echo "  make clean        - Archive old session files, clean up workspace"
+	@echo "  make serve        - Start docsify server for browsing docs (port 3000)"
 	@echo ""
 	@echo "Development workflow:"
 	@echo "  1. make install     (first time only - symlink to ~/.claude/)"
 	@echo "  2. Restart Claude Code"
 	@echo "  3. Create artifacts in commands/, skills/, agents/, rules/"
-	@echo "  4. make validate    (check frontmatter)"
-	@echo "  5. make test        (run all checks)"
+	@echo "  4. make test        (validate + free eval tiers)"
+	@echo "  5. make eval        (optional — costs tokens, uses your local Claude Code auth)"
 	@echo "  6. git add/commit   (commit changes)"
 	@echo ""
 	@echo "Documentation:"
 	@echo "  make serve          (browse docs at http://localhost:3000)"
+	@echo "  evals/README.md     (the three eval tiers explained)"
 
 install:
 	@echo "🛠️  Toolkit Developer Install"
@@ -124,6 +128,9 @@ validate:
 			fi; \
 		done; \
 	fi
+	@echo ""
+	@echo "Validating Toolkit artifacts (commands/, skills/, agents/, rules/)..."
+	@bash skills/toolkit-validate/scripts/validate-artifacts.sh
 
 clean:
 	@echo "Cleaning up workspace..."
@@ -158,76 +165,19 @@ test: validate
 	@test -f Makefile && echo "  ✅ Makefile exists" || echo "  ❌ Makefile missing"
 	@test -f .gitignore && echo "  ✅ .gitignore exists" || echo "  ❌ .gitignore missing"
 	@echo ""
-	@echo "4. Checking for common issues..."
-	@if [ -d commands ] || [ -d skills ] || [ -d agents ] || [ -d rules ]; then \
-		! find commands skills agents rules -name "*.md" -type f -size 0 2>/dev/null | grep -q . && \
-			echo "  ✅ No empty files" || \
-			(echo "  ⚠️  Found empty files:" && find commands skills agents rules -name "*.md" -type f -size 0); \
-	else \
-		echo "  ℹ️  No artifact directories to check"; \
-	fi
+	@echo "4. Artifact structure/frontmatter (empty files, skill name==dir, agent/command/rule frontmatter)..."
+	@echo "   → covered by 'make validate' (skills/toolkit-validate/scripts/validate-artifacts.sh), already run above"
 	@echo ""
-	@echo "5. Validating skill name fields match directories..."
-	@if [ -d skills ]; then \
-		SKILL_ERRORS=0; \
-		for skill_file in $$(find skills -name "SKILL.md" -type f); do \
-			skill_dir=$$(basename $$(dirname "$$skill_file")); \
-			skill_name=$$(grep "^name:" "$$skill_file" | head -1 | sed 's/name: *//'); \
-			if [ "$$skill_dir" != "$$skill_name" ]; then \
-				echo "  ❌ $$skill_file: name '$$skill_name' ≠ directory '$$skill_dir'"; \
-				SKILL_ERRORS=$$((SKILL_ERRORS + 1)); \
-			fi; \
-		done; \
-		if [ $$SKILL_ERRORS -eq 0 ]; then \
-			echo "  ✅ All skill names match their directories"; \
-		else \
-			echo ""; \
-			echo "  ⚠️  Found $$SKILL_ERRORS skill name mismatch(es)"; \
-			echo "  Per agentskills.io spec: name field must match parent directory"; \
-			exit 1; \
-		fi; \
-	else \
-		echo "  ℹ️  No skills directory to check"; \
-	fi
-	@echo ""
-	@echo "6. Validating agent frontmatter..."
-	@if [ -d agents ]; then \
-		AGENT_ERRORS=0; \
-		for agent_file in agents/toolkit-*.md; do \
-			[ -f "$$agent_file" ] || continue; \
-			agent_basename=$$(basename "$$agent_file" .md); \
-			if ! grep -q "^---" "$$agent_file"; then \
-				echo "  ❌ $$agent_file: Missing frontmatter"; \
-				AGENT_ERRORS=$$((AGENT_ERRORS + 1)); \
-				continue; \
-			fi; \
-			agent_name=$$(sed -n '/^---/,/^---/p' "$$agent_file" | grep "^name:" | head -1 | sed 's/name: *//'); \
-			if [ -z "$$agent_name" ]; then \
-				echo "  ❌ $$agent_file: Missing 'name' field in frontmatter"; \
-				AGENT_ERRORS=$$((AGENT_ERRORS + 1)); \
-			elif [ "$$agent_name" != "$$agent_basename" ]; then \
-				echo "  ❌ $$agent_file: name '$$agent_name' ≠ filename '$$agent_basename'"; \
-				AGENT_ERRORS=$$((AGENT_ERRORS + 1)); \
-			fi; \
-			agent_description=$$(sed -n '/^---/,/^---/p' "$$agent_file" | grep "^description:" | head -1); \
-			if [ -z "$$agent_description" ]; then \
-				echo "  ❌ $$agent_file: Missing 'description' field in frontmatter"; \
-				AGENT_ERRORS=$$((AGENT_ERRORS + 1)); \
-			fi; \
-		done; \
-		if [ $$AGENT_ERRORS -eq 0 ]; then \
-			echo "  ✅ All agent frontmatter valid"; \
-		else \
-			echo ""; \
-			echo "  ⚠️  Found $$AGENT_ERRORS agent frontmatter error(s)"; \
-			echo "  See rules/toolkit-agents.md for standards"; \
-			exit 1; \
-		fi; \
-	else \
-		echo "  ℹ️  No agents directory to check"; \
-	fi
+	@echo "5. Script correctness (bundled *.sh scripts + eval grading logic, no LLM/network)..."
+	@$(MAKE) test-scripts
 	@echo ""
 	@echo "✅ All checks complete"
+
+test-scripts:
+	@bash evals/scripts/run-all.sh
+
+eval:
+	@bash evals/scenarios/lib/run-all.sh
 
 serve:
 	@echo "Starting docsify server..."

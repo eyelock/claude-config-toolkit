@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    name: Validate + script tests (free)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: make test
+
+  eval:
+    name: LLM-in-the-loop evals (needs ANTHROPIC_API_KEY)
+    runs-on: ubuntu-latest
+    needs: validate
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for API key
+        id: check
+        run: |
+          if [ -n "$ANTHROPIC_API_KEY" ]; then
+            echo "has_key=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_key=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::ANTHROPIC_API_KEY secret not set on this repo — skipping LLM-in-the-loop evals."
+          fi
+
+      - name: Install Claude Code CLI
+        if: steps.check.outputs.has_key == 'true'
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Run LLM-in-the-loop evals
+        if: steps.check.outputs.has_key == 'true'
+        run: make eval
