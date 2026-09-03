@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "example-stdio": {
+      "command": "npx",
+      "args": ["-y", "@example-org/example-mcp-server"],
+      "env": {
+        "EXAMPLE_API_TOKEN": "${EXAMPLE_API_TOKEN}"
+      }
+    },
+    "example-http": {
+      "type": "http",
+      "url": "https://mcp.example.com/${MCP_WORKSPACE:-default}",
+      "headers": {
+        "Authorization": "Bearer ${EXAMPLE_API_TOKEN}"
+      }
+    }
+  }
+}
