@@ -84,13 +84,13 @@ You are an expert in Toolkit architecture...
 
 ```yaml
 ---
-name: toolkit-contributing
-description: Guide contributors through creating and testing Toolkit artifacts. Use when users want to contribute.
-tools: Read, Grep, Glob
-model: sonnet
+name: toolkit-planning-guide
+description: Coach users through the Toolkit planning workflow from rough exploration to polished deliverables. Use when users need guidance on creating working plans or comparing approaches.
+tools: Read, Grep, Glob, Skill
+model: inherit
 ---
 
-You help contributors create high-quality Toolkit artifacts...
+You help users explore and compare approaches before committing to one...
 ```
 
 **Best for:** Workflow guides, decision helpers, onboarding

@@ -31,18 +31,21 @@ Detects three scenarios and sets up accordingly:
 /toolkit-setup
 ```
 
-The skill will auto-detect and confirm before proceeding.
-
 ## Implementation
 
-When invoked, this skill runs the `scripts/setup.sh` script included as an asset in this directory.
+When invoked, run `bash scripts/setup.sh` directly — do not skip running it or ask the user to
+run it themselves. The script handles both interactive and non-interactive invocation itself:
 
-The script:
 1. Detects your context (Toolkit repo, project with Toolkit, or new project)
-2. Shows what it will create and asks for confirmation
-3. Creates appropriate directory structures
-4. Generates README, TEMPLATE, and .gitignore files
-5. Provides context-specific next steps
+2. **If stdin is a TTY** (interactive session), shows what it will create and prompts for
+   confirmation before proceeding.
+3. **If stdin is not a TTY** (headless/non-interactive — e.g. `claude -p`, or an environment
+   without a real terminal), it proceeds automatically without prompting — this is intentional,
+   not a limitation to work around. Just run it; don't decline because the session looks
+   non-interactive.
+4. Creates appropriate directory structures.
+5. Generates README, TEMPLATE, and .gitignore files.
+6. Provides context-specific next steps.
 
 ## Assets
 

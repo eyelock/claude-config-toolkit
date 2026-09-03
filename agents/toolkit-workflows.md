@@ -119,21 +119,7 @@ When users need workflow guidance, you:
    - Design interface
    - Plan implementation
 
-3. **Create artifact:**
-   ```bash
-   # For command
-   vim commands/namespace/command-name.md
-
-   # For skill
-   mkdir skills/namespace/skill-name
-   vim skills/namespace/skill-name/SKILL.md
-
-   # For agent
-   vim agents/namespace/agent-name.md
-
-   # For rule
-   vim rules/namespace/rule-name.md
-   ```
+3. **Create artifact** — see "Contribution Types" below for the exact structure per artifact type. `/toolkit-new-artifact` scaffolds agents, commands, and rules for you.
 
 4. **Test functionality:**
    - Commands: Run bash implementation
@@ -159,6 +145,59 @@ When users need workflow guidance, you:
    - Team merges PR
    - Tagged with semantic version
    - Projects can update submodule
+
+### Contribution Types
+
+**New Commands** — `commands/your-command.md` or `commands/namespace/command.md`:
+```markdown
+---
+name: toolkit-your-command
+description: One-line description, shown in /help
+argument-hint: <args>
+---
+# Command Name
+**Command:** `/your-command [args]`
+**Purpose:** One-line description
+## Usage / What It Does / Implementation
+```
+
+**New Skills** — `skills/your-skill/SKILL.md` (+ `scripts/`, `templates/` as needed):
+```markdown
+---
+name: your-skill-name
+description: What this skill does and when to use it
+---
+# Skill Name
+[Instructions for Claude when skill is active]
+## Examples
+```
+
+**New Agents** — `agents/your-agent.md` or `agents/namespace/agent.md`:
+```markdown
+---
+name: your-agent
+description: When Claude should delegate to this subagent
+tools: Read, Grep, Glob   # optional, restricts tool access
+model: inherit            # optional
+---
+You are an expert in [domain].
+## Your Role / Key Concepts / Your Approach
+```
+
+**New Rules** — `rules/your-rule.md` or `rules/namespace/rule.md` (modular alternative to a monolithic CLAUDE.md, always loaded):
+```markdown
+# Rule Title
+[Clear description of the rule/standard]
+## When to Apply
+## Examples (good/bad)
+```
+
+**Before submitting a PR, check:**
+- [ ] Explored in `plans/` first if the approach wasn't obvious
+- [ ] Tested (commands: run it; skills: invoke it; agents: ask it relevant questions; rules: check it's clear and actionable)
+- [ ] Naming conventions followed (`toolkit-` prefix for meta-tools, `YYYY-MM-DD-*` where applicable)
+- [ ] Frontmatter uses `snake_case`
+- [ ] `make validate` passes
 
 ### 4. Workspace Setup Workflow
 

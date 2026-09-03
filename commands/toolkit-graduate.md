@@ -1,3 +1,9 @@
+---
+name: toolkit-graduate
+description: Graduate a working plan from plans/ to formal, team-shared documentation.
+argument-hint: <plan-name>
+---
+
 # Graduate Plan
 
 **Command:** `/toolkit-graduate <plan-name>`

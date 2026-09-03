@@ -206,68 +206,9 @@ Random thought: Could we use in-memory for dev, Redis for prod? 🤔
 - "Let's capture that uncertainty in the plan"
 - "We can decide later - add it to open questions"
 
-## Graduation Process
+## Graduating
 
-### Graduation Checklist
-
-Guide users through:
-
-```
-Before graduating to formal plan:
-
-- [ ] Decision made on approach
-- [ ] Remove rejected alternatives
-- [ ] Remove "dumb questions" and rough notes
-- [ ] Add clear implementation steps
-- [ ] Polish language for team audience
-- [ ] Update frontmatter
-- [ ] Ready for team review
-```
-
-### Using the Graduate Command
-
-```bash
-/toolkit-graduate 2026-02-01-auth-approaches
-```
-
-This command:
-1. Copies working plan to `plans/`
-2. Updates frontmatter (links, status)
-3. Prompts for cleanup (archive/delete/keep)
-4. Guides through polishing process
-
-### Manual Graduation
-
-If not using the command:
-
-1. **Copy to formal location**
-   ```bash
-   cp plans/2026-02-01-auth.md plans/auth-implementation.md
-   ```
-
-2. **Edit formal plan:**
-   - Remove rejected approaches
-   - Remove rough notes section
-   - Add implementation steps
-   - Polish language
-
-3. **Update working plan frontmatter:**
-   ```yaml
-   related_to: "plans/auth-implementation.md"
-   status: "archived"
-   ```
-
-4. **Archive working plan:**
-   ```bash
-   mv plans/2026-02-01-auth.md \
-      plans/archive/2026-02/
-   ```
-
-5. **Commit formal plan:**
-   ```bash
-   git add plans/auth-implementation.md
-   git commit -m "Add: formal auth implementation plan"
-   ```
+Once a decision is made, use `/toolkit-graduate <plan-name>` (see `commands/toolkit-graduate.md` and the step-by-step "Planning Workflow" in `agents/toolkit-workflows.md`) rather than graduating manually — the checklist is the same one in that command's docs: decision made, rejected approaches removed, rough notes gone, implementation steps added, language polished, frontmatter updated.
 
 ## Example: Before and After
 
